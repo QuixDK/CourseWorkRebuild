@@ -45,23 +45,14 @@ namespace CourseWorkRebuild
                 if (setFieldsForNewProject.getInitProject() != null)
                 {
                     this.initProject = setFieldsForNewProject.getInitProject();
-                    loadObjectDiagram();
-                    getDbConnection();
-                    showTable(SQL_AllTable());
-                    initValues();
-                    isContinue = true;
-                    calculateMValues();
+                    startProgramm();
                 }
 
                 if (setUpProject.getInitProject() != null)
                 {
                     this.initProject = setUpProject.getInitProject();
-                    loadObjectDiagram();
-                    getDbConnection();
-                    showTable(SQL_AllTable());
-                    initValues();
-                    isContinue = true;
-                    calculateMValues();
+                    startProgramm();
+                    calculateAValues();
                 }
                 if (!isContinue)
                 {
@@ -74,6 +65,16 @@ namespace CourseWorkRebuild
                 Close();
             }
 
+        }
+
+        private void startProgramm()
+        {
+            loadObjectDiagram();
+            getDbConnection();
+            showTable(SQL_AllTable());
+            initValues();
+            isContinue = true;
+            calculateMValues();
         }
 
         private void loadObjectDiagram()
@@ -128,6 +129,33 @@ namespace CourseWorkRebuild
             
         }
 
+        private void calculateAValues()
+        {
+            double calculateAcos = 0;
+            double calculateDegree = 0;
+            double summPr = 0;
+            double firstValue = 0;
+            double secondValue = 0;
+            for (int i = 1; i < elevatorTable.ColumnCount; i++)
+            {
+                for (int j = 0; j < elevatorTable.Rows.Count - 1; j++)
+                {
+                    firstValue = Convert.ToDouble(elevatorTable.Rows[j].Cells[i].Value);
+                    secondValue = Convert.ToDouble(elevatorTable.Rows[j].Cells[i].Value);
+                    summPr += firstValue * secondValue;
+                    break;
+                }
+            }
+
+            calculateAcos = Math.Acos(summPr / (listOfMValues[0] * listOfMValues[1]));
+            calculateDegree = Math.PI * calculateAcos / 180;
+
+            listOfAlphaValues.Add(calculateDegree);
+            listBox2.Items.Add(listOfAlphaValues[1]);
+
+            
+
+        }
         private String getTableNames()
         {
             String SQLQuery = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;";

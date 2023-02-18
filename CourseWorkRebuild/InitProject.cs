@@ -51,13 +51,5 @@ namespace CourseWorkRebuild
         {
             return this.pathToElevatorAndValuesTableRoot;
         }
-
-        public void showObjectDiagram()
-        {
-
-
-
-
-        }
     }
 }
