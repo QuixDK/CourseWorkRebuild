@@ -22,10 +22,11 @@ namespace CourseWorkRebuild
             this.valueOfa = valueOfA;
         }
 
-        public InitProject(String pathToElevatorAndValuesTableRoot, String pathToObjectDiagramRoot)
+        public InitProject(String pathToElevatorAndValuesTableRoot, String pathToObjectDiagramRoot, String valueOfT)
         {
             this.pathToElevatorAndValuesTableRoot = pathToElevatorAndValuesTableRoot;
             this.pathToObjectDiagramRoot = pathToObjectDiagramRoot;
+            this.valueOfT = valueOfT;
         }
 
         public String getPathToElevatorTableRoot()

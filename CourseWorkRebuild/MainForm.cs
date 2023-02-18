@@ -59,6 +59,7 @@ namespace CourseWorkRebuild
                     loadObjectDiagram();
                     getDbConnection();
                     showTable(SQL_AllTable());
+                    initValues();
                     isContinue = true;
                     calculateMValues();
                 }
@@ -102,6 +103,7 @@ namespace CourseWorkRebuild
 
         private void calculateMValues()
         {
+            double summPr = 0;
             double M = 0;
             List<Double> values = new List<double>();
             listOfMValues = new List<double>();
@@ -200,6 +202,11 @@ namespace CourseWorkRebuild
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
