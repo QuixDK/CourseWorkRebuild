@@ -52,7 +52,7 @@ namespace CourseWorkRebuild
                 {
                     this.initProject = setUpProject.getInitProject();
                     startProgramm();
-                    calculateAValues();
+                    
                 }
                 if (!isContinue)
                 {
@@ -75,6 +75,17 @@ namespace CourseWorkRebuild
             initValues();
             isContinue = true;
             calculateMValues();
+            calculateAValues();
+            showResponseFunction();
+        }
+
+        private void showResponseFunction()
+        {
+            for (int i = 0; i < listOfMValues.Count; i++) 
+            {
+                responseFunctionDiagram.Series["Функция отклика"].Points.AddXY(listOfMValues[i], listOfAlphaValues[i]);
+            }
+           
         }
 
         private void loadObjectDiagram()
@@ -136,22 +147,25 @@ namespace CourseWorkRebuild
             double summPr = 0;
             double firstValue = 0;
             double secondValue = 0;
-            for (int i = 1; i < elevatorTable.ColumnCount; i++)
+            
+            listBox2.Items.Add(listOfAlphaValues[0]);
+            for (int i = 0; i < elevatorTable.Rows.Count-2; i++)
             {
-                for (int j = 0; j < elevatorTable.Rows.Count - 1; j++)
+                for (int j = 1; j < elevatorTable.ColumnCount; j++)
                 {
-                    firstValue = Convert.ToDouble(elevatorTable.Rows[j].Cells[i].Value);
-                    secondValue = Convert.ToDouble(elevatorTable.Rows[j].Cells[i].Value);
+                    firstValue = Convert.ToDouble(elevatorTable.Rows[0].Cells[j].Value);
+                    secondValue = Convert.ToDouble(elevatorTable.Rows[i+1].Cells[j].Value);
                     summPr += firstValue * secondValue;
-                    break;
                 }
+                summPr = summPr / listOfMValues[0] / listOfMValues[i + 1];
+                calculateAcos = Math.Acos(summPr);
+                calculateDegree = 180 * calculateAcos / Math.PI;
+                listOfAlphaValues.Add(calculateDegree);
+                listBox2.Items.Add(listOfAlphaValues[i+1]);
+                
             }
 
-            calculateAcos = Math.Acos(summPr / (listOfMValues[0] * listOfMValues[1]));
-            calculateDegree = Math.PI * calculateAcos / 180;
-
-            listOfAlphaValues.Add(calculateDegree);
-            listBox2.Items.Add(listOfAlphaValues[1]);
+            
 
             
 
@@ -224,19 +238,5 @@ namespace CourseWorkRebuild
             return "SELECT * FROM [" + getTableNames() + "]";
         }
 
-        private void showTableButton_Click(object sender, EventArgs e)
-        {
-            showTable(SQL_AllTable());
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

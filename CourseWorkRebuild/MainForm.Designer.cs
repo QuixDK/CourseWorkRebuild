@@ -31,7 +31,8 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            this.responseFunctionDiagram = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.elevatorTable = new System.Windows.Forms.DataGridView();
             this.objectDiagramPicture = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -39,27 +40,30 @@
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.responseFunctionDiagram)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.elevatorTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // chart1
+            // responseFunctionDiagram
             // 
             chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            this.responseFunctionDiagram.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(6, 29);
-            this.chart1.Name = "chart1";
+            this.responseFunctionDiagram.Legends.Add(legend1);
+            this.responseFunctionDiagram.Location = new System.Drawing.Point(6, 29);
+            this.responseFunctionDiagram.Name = "responseFunctionDiagram";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(619, 272);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
+            series1.Name = "Функция отклика";
+            this.responseFunctionDiagram.Series.Add(series1);
+            this.responseFunctionDiagram.Size = new System.Drawing.Size(619, 272);
+            this.responseFunctionDiagram.TabIndex = 0;
+            this.responseFunctionDiagram.Text = "chart1";
+            title1.Name = "Функция Отклика";
+            title1.Text = "Функция отклика";
+            this.responseFunctionDiagram.Titles.Add(title1);
             // 
             // elevatorTable
             // 
@@ -86,7 +90,7 @@
             this.toolStripTextBox2});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1237, 31);
+            this.menuStrip1.Size = new System.Drawing.Size(1237, 27);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -94,13 +98,13 @@
             // 
             this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 23);
             // 
             // toolStripTextBox2
             // 
             this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox2.Name = "toolStripTextBox2";
-            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 23);
             // 
             // listBox1
             // 
@@ -109,7 +113,6 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(82, 277);
             this.listBox1.TabIndex = 4;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // listBox2
             // 
@@ -118,7 +121,6 @@
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(82, 277);
             this.listBox2.TabIndex = 5;
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -129,7 +131,7 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.objectDiagramPicture);
             this.Controls.Add(this.elevatorTable);
-            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.responseFunctionDiagram);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -137,7 +139,7 @@
             this.Text = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.responseFunctionDiagram)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.elevatorTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -149,7 +151,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart responseFunctionDiagram;
         private System.Windows.Forms.DataGridView elevatorTable;
         private System.Windows.Forms.PictureBox objectDiagramPicture;
         private System.Windows.Forms.MenuStrip menuStrip1;
