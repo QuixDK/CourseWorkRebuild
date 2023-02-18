@@ -40,6 +40,7 @@
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
+            this.saveChangesButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.responseFunctionDiagram)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.elevatorTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).BeginInit();
@@ -67,6 +68,10 @@
             // 
             // elevatorTable
             // 
+            this.elevatorTable.AllowUserToAddRows = false;
+            this.elevatorTable.AllowUserToDeleteRows = false;
+            this.elevatorTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.elevatorTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.elevatorTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.elevatorTable.Location = new System.Drawing.Point(13, 305);
             this.elevatorTable.Name = "elevatorTable";
@@ -79,6 +84,7 @@
             this.objectDiagramPicture.Location = new System.Drawing.Point(807, 29);
             this.objectDiagramPicture.Name = "objectDiagramPicture";
             this.objectDiagramPicture.Size = new System.Drawing.Size(418, 274);
+            this.objectDiagramPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.objectDiagramPicture.TabIndex = 2;
             this.objectDiagramPicture.TabStop = false;
             // 
@@ -122,11 +128,23 @@
             this.listBox2.Size = new System.Drawing.Size(82, 277);
             this.listBox2.TabIndex = 5;
             // 
+            // saveChangesButton
+            // 
+            this.saveChangesButton.AutoSize = true;
+            this.saveChangesButton.Location = new System.Drawing.Point(211, 0);
+            this.saveChangesButton.Name = "saveChangesButton";
+            this.saveChangesButton.Size = new System.Drawing.Size(135, 27);
+            this.saveChangesButton.TabIndex = 6;
+            this.saveChangesButton.Text = "Применить изменения";
+            this.saveChangesButton.UseVisualStyleBackColor = true;
+            this.saveChangesButton.Click += new System.EventHandler(this.saveChangesButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1237, 621);
+            this.Controls.Add(this.saveChangesButton);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.objectDiagramPicture);
@@ -139,6 +157,7 @@
             this.Text = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.responseFunctionDiagram)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.elevatorTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).EndInit();
@@ -159,6 +178,7 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Button saveChangesButton;
     }
 }
 

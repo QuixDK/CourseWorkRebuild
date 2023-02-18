@@ -110,9 +110,10 @@
             // 
             // selectElevationTablePath
             // 
+            this.selectElevationTablePath.AutoSize = true;
             this.selectElevationTablePath.Location = new System.Drawing.Point(465, 6);
             this.selectElevationTablePath.Name = "selectElevationTablePath";
-            this.selectElevationTablePath.Size = new System.Drawing.Size(31, 20);
+            this.selectElevationTablePath.Size = new System.Drawing.Size(31, 23);
             this.selectElevationTablePath.TabIndex = 8;
             this.selectElevationTablePath.Text = "...";
             this.selectElevationTablePath.UseVisualStyleBackColor = true;
@@ -120,9 +121,10 @@
             // 
             // selectObjectDiagramPath
             // 
+            this.selectObjectDiagramPath.AutoSize = true;
             this.selectObjectDiagramPath.Location = new System.Drawing.Point(465, 36);
             this.selectObjectDiagramPath.Name = "selectObjectDiagramPath";
-            this.selectObjectDiagramPath.Size = new System.Drawing.Size(31, 22);
+            this.selectObjectDiagramPath.Size = new System.Drawing.Size(31, 23);
             this.selectObjectDiagramPath.TabIndex = 9;
             this.selectObjectDiagramPath.Text = "...";
             this.selectObjectDiagramPath.UseVisualStyleBackColor = true;
@@ -137,6 +139,7 @@
             // 
             // createProjectButton
             // 
+            this.createProjectButton.AutoSize = true;
             this.createProjectButton.Location = new System.Drawing.Point(11, 94);
             this.createProjectButton.Name = "createProjectButton";
             this.createProjectButton.Size = new System.Drawing.Size(485, 25);
@@ -165,6 +168,8 @@
             this.Name = "SetFieldsForNewProject";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Создать проект";
+            this.Load += new System.EventHandler(this.SetFieldsForNewProject_Load);
+            this.Resize += new System.EventHandler(this.SetFieldsForNewProject_Resize);
             this.ResumeLayout(false);
             this.PerformLayout();
 

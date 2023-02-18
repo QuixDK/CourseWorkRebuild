@@ -14,6 +14,9 @@ namespace CourseWorkRebuild
 {
     public partial class SetUpProject : Form
     {
+        private Rectangle originalCreateProjectButton;
+        private Rectangle originalOpenProjectButton;
+        private Rectangle originalFormSize;
         public String projectRoot = "";
         private InitProject initProject;
         public SetFieldsForNewProject initInfoForCreateDB;
@@ -109,6 +112,34 @@ namespace CourseWorkRebuild
         {
             this.initInfoForCreateDB.ShowDialog();
             Close();
+        }
+
+        private void SetUpProject_Load(object sender, EventArgs e)
+        {
+            originalFormSize = new Rectangle(this.Location.X, this.Location.Y, this.Width,this.Height);
+            originalCreateProjectButton = new Rectangle(createProjectButton.Location.X, createProjectButton.Location.Y, createProjectButton.Width, createProjectButton.Height);
+            originalOpenProjectButton = new Rectangle(openProjectButton.Location.X, openProjectButton.Location.Y, openProjectButton.Width, openProjectButton.Height);
+        }
+
+        private void resizeControl(Rectangle r, Control c)
+        {
+            float xRatio = (float)(this.Width) / (float)(originalFormSize.Width);
+            float yRatio = (float)(this.Height) / (float)(originalFormSize.Height);
+
+            int newX = (int)(r.Location.X * xRatio);
+            int newY = (int)(r.Location.Y * yRatio);
+
+            int newWidth = (int)(r.Width * xRatio);
+            int newHeight = (int)(r.Height * yRatio);
+
+            c.Location = new Point(newX, newY);
+            c.Size = new Size(newWidth, newHeight);
+        }
+
+        private void SetUpProject_Resize(object sender, EventArgs e)
+        {
+            resizeControl(originalCreateProjectButton, createProjectButton);
+            resizeControl(originalOpenProjectButton, openProjectButton);
         }
     }
     public class NullProjectRootException : Exception

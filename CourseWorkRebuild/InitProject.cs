@@ -51,5 +51,15 @@ namespace CourseWorkRebuild
         {
             return this.pathToElevatorAndValuesTableRoot;
         }
+
+        public void setTValue(String newTValue)
+        {
+            this.valueOfT = newTValue;
+        }
+
+        public void setAValue(String newAValue)
+        {
+            this.valueOfa = newAValue; 
+        }
     }
 }

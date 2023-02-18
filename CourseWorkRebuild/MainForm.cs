@@ -10,11 +10,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Threading;
+using System.Reflection.Emit;
 
 namespace CourseWorkRebuild
 {
     public partial class MainForm : Form
     {
+        private Rectangle originalFormSize;
+        private Rectangle objectDiagramPictureRectangle;
+        private Rectangle responseFunctionDiagramRectangle;
+        private Rectangle elevatorTableRectangle;
         private InitProject initProject;
         private SetUpProject setUpProject;
         private SQLiteConnection sqlConnection;
@@ -39,6 +44,13 @@ namespace CourseWorkRebuild
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            elevatorTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            originalFormSize = new Rectangle(this.Location.X, this.Location.Y, this.Width, this.Height);
+            elevatorTableRectangle = new Rectangle(elevatorTable.Location.X, elevatorTable.Location.Y, elevatorTable.Width, elevatorTable.Height);
+            responseFunctionDiagramRectangle = new Rectangle(responseFunctionDiagram.Location.X, responseFunctionDiagram.Location.Y, responseFunctionDiagram.Width, responseFunctionDiagram.Height);
+            objectDiagramPictureRectangle = new Rectangle(objectDiagramPicture.Location.X, objectDiagramPicture.Location.Y, objectDiagramPicture.Width, objectDiagramPicture.Height);
+
+
             try
             {
 
@@ -81,6 +93,7 @@ namespace CourseWorkRebuild
 
         private void showResponseFunction()
         {
+            responseFunctionDiagram.Series["Функция отклика"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             for (int i = 0; i < listOfMValues.Count; i++) 
             {
                 responseFunctionDiagram.Series["Функция отклика"].Points.AddXY(listOfMValues[i], listOfAlphaValues[i]);
@@ -236,6 +249,40 @@ namespace CourseWorkRebuild
         private String SQL_AllTable()
         {
             return "SELECT * FROM [" + getTableNames() + "]";
+        }
+
+        private void saveChangesButton_Click(object sender, EventArgs e)
+        {
+            initProject.setTValue(this.toolStripTextBox1.Text);
+            initProject.setAValue(this.toolStripTextBox2.Text);
+        }
+
+        private void resizeControl(Rectangle r, Control c)
+        {
+            float xRatio = (float)(this.Width) / (float)(originalFormSize.Width);
+            float yRatio = (float)(this.Height) / (float)(originalFormSize.Height);
+
+            int newX = (int)(r.Location.X * xRatio);
+            int newY = (int)(r.Location.Y * yRatio);
+
+            int newWidth = (int)(r.Width * xRatio);
+            int newHeight = (int)(r.Height * yRatio);
+
+            c.Location = new Point(newX, newY);
+            c.Size = new Size(newWidth, newHeight);
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            resizeControl(elevatorTableRectangle, elevatorTable);
+            resizeControl(objectDiagramPictureRectangle, objectDiagramPicture);
+            resizeControl(responseFunctionDiagramRectangle, responseFunctionDiagram);
+            for (int column = 0; column < elevatorTable.ColumnCount; column++)
+            {
+                elevatorTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                
+            }
+            
         }
 
     }
