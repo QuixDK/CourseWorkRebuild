@@ -155,32 +155,30 @@ namespace CourseWorkRebuild
 
         private void calculateAValues()
         {
-            double calculateAcos = 0;
-            double calculateDegree = 0;
-            double summPr = 0;
-            double firstValue = 0;
-            double secondValue = 0;
+            Double calculateAcos = 0;
+            Double calculateDegree = 0;
+            Double summPr = 0;
+            Double firstValue = 0;
+            Double secondValue = 0;
             
             listBox2.Items.Add(listOfAlphaValues[0]);
             for (int i = 0; i < elevatorTable.Rows.Count-2; i++)
             {
+                 summPr = 0;
                 for (int j = 1; j < elevatorTable.ColumnCount; j++)
                 {
                     firstValue = Convert.ToDouble(elevatorTable.Rows[0].Cells[j].Value);
                     secondValue = Convert.ToDouble(elevatorTable.Rows[i+1].Cells[j].Value);
                     summPr += firstValue * secondValue;
                 }
-                summPr = summPr / listOfMValues[0] / listOfMValues[i + 1];
+                summPr /= listOfMValues[0];
+                summPr /= listOfMValues[i + 1];
                 calculateAcos = Math.Acos(summPr);
                 calculateDegree = 180 * calculateAcos / Math.PI;
                 listOfAlphaValues.Add(calculateDegree);
                 listBox2.Items.Add(listOfAlphaValues[i+1]);
                 
-            }
-
-            
-
-            
+            } 
 
         }
         private String getTableNames()
