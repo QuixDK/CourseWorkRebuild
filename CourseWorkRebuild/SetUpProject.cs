@@ -87,7 +87,7 @@ namespace CourseWorkRebuild
                     }
                 }
 
-                this.initProject = new InitProject(elevatorAndValuesTablePath, objectDiagramPath, valueOfT);
+                this.initProject = new InitProject(elevatorAndValuesTablePath, objectDiagramPath, valueOfT, "0,9");
 
                 Close();
 

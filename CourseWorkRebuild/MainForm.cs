@@ -35,6 +35,7 @@ namespace CourseWorkRebuild
         private List<Double> listOfMValues;
         private List<Double> listOfAlphaValues;
         private bool responseFunctionIsShow = false;
+        private bool forecastResponseFunctionIsShow = false;
         Repository db;
         Calculations calculations;
 
@@ -61,14 +62,12 @@ namespace CourseWorkRebuild
 
                 if (setFieldsForNewProject.getInitProject() != null)
                 {
-                    isContinue = true;
                     this.initProject = setFieldsForNewProject.getInitProject();
                     startProgramm();
                 }
 
                 if (setUpProject.getInitProject() != null)
                 {
-                    isContinue = true;
                     this.initProject = setUpProject.getInitProject();
                     startProgramm();
                     
@@ -86,7 +85,7 @@ namespace CourseWorkRebuild
 
             catch (Exception ex)
             {
-                MessageBox.Show("Не удалось открыть проект");
+                MessageBox.Show(ex.Message.ToString());
                 Close();
             }
 
@@ -94,6 +93,8 @@ namespace CourseWorkRebuild
 
         private void startProgramm()
         {
+            isContinue = true;
+
             db = new Repository(initProject);
             sqlConnection = db.getDbConnection();
             
@@ -188,6 +189,7 @@ namespace CourseWorkRebuild
         }
         private void showResponseFunction()
         {
+            
             responseFunctionDiagram.Series.Add("Функция отклика");
             responseFunctionDiagram.Series["Функция отклика"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             for (int i = 0; i < listOfMValues.Count; i++)
@@ -216,8 +218,43 @@ namespace CourseWorkRebuild
                 hideResponseFunction();
                 responseFunctionIsShow = false;
             }
-                
 
+        }
+        private void forecastResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (forecastResponseFunctionIsShow == false)
+            {
+                showforecastResponseFunction();
+                forecastResponseFunctionIsShow = true;
+            }
+            else
+            {
+                hideforecastResponseFunction();
+                forecastResponseFunctionIsShow = false;
+            }
+        }
+
+        private void showforecastResponseFunction()
+        {
+            List<Double> forecastMValue = new List<Double>();
+            List<Double> forecastAValue = new List<Double>();
+            String a = toolStripTextBox2.Text.Split(' ')[1];
+            forecastMValue = calculations.getForecastMValue(listOfMValues, Convert.ToDouble(a));
+            forecastAValue = calculations.getForecastAValue(listOfAlphaValues, Convert.ToDouble(a));
+
+            responseFunctionDiagram.Series.Add("Прогнозное значение");
+            responseFunctionDiagram.Series["Прогнозное значение"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            for (int i = 0; i < forecastMValue.Count-1;i++)
+            {
+               responseFunctionDiagram.Series["Прогнозное значение"].Points.AddXY(forecastMValue[i], forecastAValue[i]);
+            }
+           
+        }
+
+        private void hideforecastResponseFunction()
+        {
+            responseFunctionDiagram.Series["Прогнозное значение"].Points.Clear();
+            responseFunctionDiagram.Series.Remove(responseFunctionDiagram.Series["Прогнозное значение"]);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -266,6 +303,5 @@ namespace CourseWorkRebuild
             responseFunctionDiagramRectangle = new Rectangle(responseFunctionDiagram.Location.X, responseFunctionDiagram.Location.Y, responseFunctionDiagram.Width, responseFunctionDiagram.Height);
             objectDiagramPictureRectangle = new Rectangle(objectDiagramPicture.Location.X, objectDiagramPicture.Location.Y, objectDiagramPicture.Width, objectDiagramPicture.Height);
         }
-
     }
 }
