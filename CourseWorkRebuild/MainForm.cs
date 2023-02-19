@@ -11,57 +11,64 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Threading;
 using System.Reflection.Emit;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace CourseWorkRebuild
 {
     public partial class MainForm : Form
     {
+        private Rectangle topLineSelectBoxRectangle;
+        private Rectangle bottomLineSelectBoxRectangle;
+        private Rectangle forecastResponseFunctionSelectBoxRectangle;
+        private Rectangle showResponseFunctionSelectBoxRectangle;
         private Rectangle originalFormSize;
+        private Rectangle tabControl1Rectangle;
         private Rectangle objectDiagramPictureRectangle;
         private Rectangle responseFunctionDiagramRectangle;
         private Rectangle elevatorTableRectangle;
         private InitProject initProject;
         private SetUpProject setUpProject;
         private SQLiteConnection sqlConnection;
-        private DataTable dataTable;
+        private DataTable dataTable = new DataTable();
         private SetFieldsForNewProject setFieldsForNewProject;
         private bool isContinue = false;
         private List<Double> listOfMValues;
         private List<Double> listOfAlphaValues;
+        private bool responseFunctionIsShow = false;
+        Repository db;
+        Calculations calculations;
 
         public MainForm()
         {
             InitializeComponent();
+            calculations = new Calculations();
             setFieldsForNewProject = new SetFieldsForNewProject();
             setUpProject = new SetUpProject(setFieldsForNewProject);
             setUpProject.ShowDialog();
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            elevatorTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            originalFormSize = new Rectangle(this.Location.X, this.Location.Y, this.Width, this.Height);
-            elevatorTableRectangle = new Rectangle(elevatorTable.Location.X, elevatorTable.Location.Y, elevatorTable.Width, elevatorTable.Height);
-            responseFunctionDiagramRectangle = new Rectangle(responseFunctionDiagram.Location.X, responseFunctionDiagram.Location.Y, responseFunctionDiagram.Width, responseFunctionDiagram.Height);
-            objectDiagramPictureRectangle = new Rectangle(objectDiagramPicture.Location.X, objectDiagramPicture.Location.Y, objectDiagramPicture.Width, objectDiagramPicture.Height);
-
+            initRectangleSettings();
 
             try
             {
 
                 if (setFieldsForNewProject.getInitProject() != null)
                 {
+                    isContinue = true;
                     this.initProject = setFieldsForNewProject.getInitProject();
                     startProgramm();
                 }
 
                 if (setUpProject.getInitProject() != null)
                 {
+                    isContinue = true;
                     this.initProject = setUpProject.getInitProject();
                     startProgramm();
                     
@@ -70,7 +77,13 @@ namespace CourseWorkRebuild
                 {
                     throw new Exception();
                 }
+                for (int column = 0; column < elevatorTable.ColumnCount; column++)
+                {
+                    elevatorTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+                }
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show("Не удалось открыть проект");
@@ -81,24 +94,14 @@ namespace CourseWorkRebuild
 
         private void startProgramm()
         {
+            db = new Repository(initProject);
+            sqlConnection = db.getDbConnection();
+            
             loadObjectDiagram();
-            getDbConnection();
             showTable(SQL_AllTable());
-            initValues();
-            isContinue = true;
-            calculateMValues();
-            calculateAValues();
-            showResponseFunction();
-        }
-
-        private void showResponseFunction()
-        {
-            responseFunctionDiagram.Series["Функция отклика"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            for (int i = 0; i < listOfMValues.Count; i++) 
-            {
-                responseFunctionDiagram.Series["Функция отклика"].Points.AddXY(listOfMValues[i], listOfAlphaValues[i]);
-            }
-           
+            initTAndAValues();
+            showMValues();
+            showAValues();
         }
 
         private void loadObjectDiagram()
@@ -107,97 +110,26 @@ namespace CourseWorkRebuild
             objectDiagramPicture.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-        private void getDbConnection()
+        private void showMValues()
         {
-            String tablePath = "";
-            if (!initProject.getPathToElevatorAndValuesTableRoot().Equals(""))
+            listOfMValues = calculations.calculateMValues(elevatorTable);
+            for (int i = 0; i < elevatorTable.Rows.Count; i++)
             {
-                tablePath = initProject.getPathToElevatorAndValuesTableRoot();
-            }
-            else if (!initProject.getPathToElevatorTableRoot().Equals(""))
-            {
-                tablePath = initProject.getPathToElevatorTableRoot();
-            }
-            dataTable = new DataTable();
-            sqlConnection = new SQLiteConnection("Data Source=" + tablePath + ";Version=3;");
-            sqlConnection.Open();
-            SQLiteCommand sqlCommand = new SQLiteCommand();
-            sqlCommand.Connection = sqlConnection;
-
-        }
-
-        private void calculateMValues()
-        {
-            double summPr = 0;
-            double M = 0;
-            List<Double> values = new List<double>();
-            listOfMValues = new List<double>();
-            listOfAlphaValues= new List<double>();
-            listOfAlphaValues.Add(0);
-            for (int i = 0; i < elevatorTable.Rows.Count-1; i++)
-            {
-                for (int j = 1; j < elevatorTable.ColumnCount; j++)
-                {
-                    values.Add(Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value));
-                }
-                foreach (double c in values)
-                {
-                    M += (c * c);
-                }
-                listOfMValues.Add(Math.Sqrt(M));
                 listBox1.Items.Add(listOfMValues[i]);
-                M = 0;
-                values.Clear();
-
-            }
-            
-        }
-
-        private void calculateAValues()
-        {
-            Double calculateAcos = 0;
-            Double calculateDegree = 0;
-            Double summPr = 0;
-            Double firstValue = 0;
-            Double secondValue = 0;
-            
-            listBox2.Items.Add(listOfAlphaValues[0]);
-            for (int i = 0; i < elevatorTable.Rows.Count-2; i++)
-            {
-                 summPr = 0;
-                for (int j = 1; j < elevatorTable.ColumnCount; j++)
-                {
-                    firstValue = Convert.ToDouble(elevatorTable.Rows[0].Cells[j].Value);
-                    secondValue = Convert.ToDouble(elevatorTable.Rows[i+1].Cells[j].Value);
-                    summPr += firstValue * secondValue;
-                }
-                summPr /= listOfMValues[0];
-                summPr /= listOfMValues[i + 1];
-                calculateAcos = Math.Acos(summPr);
-                calculateDegree = 180 * calculateAcos / Math.PI;
-                listOfAlphaValues.Add(calculateDegree);
-                listBox2.Items.Add(listOfAlphaValues[i+1]);
-                
-            } 
-
-        }
-        private String getTableNames()
-        {
-            String SQLQuery = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;";
-            SQLiteCommand command = new SQLiteCommand(SQLQuery, sqlConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
-            String tableName = "";
-
-            while (reader.Read())
-            {
-                tableName = reader.GetString(0);
             }
 
-            return tableName;
-            
         }
 
-        private void initValues()
+        private void showAValues()
+        {
+            listOfAlphaValues = calculations.calculateAValues(elevatorTable, listOfMValues);
+            for (int i = 0;i < elevatorTable.Rows.Count;i++)
+            {
+                listBox2.Items.Add(listOfAlphaValues[i]);
+            }
+        }
+
+        private void initTAndAValues()
         {
             this.toolStripTextBox1.Text = "T: " + initProject.getValueOfT();
             this.toolStripTextBox2.Text = "a: " + initProject.getValueOfa();
@@ -214,7 +146,7 @@ namespace CourseWorkRebuild
 
             for (int i = 1; i < dataTable.Columns.Count; i++)
             {
-                String replaceCommosToDots = "UPDATE [" + getTableNames() + "] SET[" + i + "] = REPLACE([" + i + "],',','.')";
+                String replaceCommosToDots = "UPDATE [" + db.getTableNames() + "] SET[" + i + "] = REPLACE([" + i + "],',','.')";
                 command.CommandText = replaceCommosToDots;
                 command.ExecuteNonQuery();
                 Thread.Sleep(10);
@@ -246,7 +178,7 @@ namespace CourseWorkRebuild
 
         private String SQL_AllTable()
         {
-            return "SELECT * FROM [" + getTableNames() + "]";
+            return "SELECT * FROM [" + db.getTableNames() + "]";
         }
 
         private void saveChangesButton_Click(object sender, EventArgs e)
@@ -254,7 +186,58 @@ namespace CourseWorkRebuild
             initProject.setTValue(this.toolStripTextBox1.Text);
             initProject.setAValue(this.toolStripTextBox2.Text);
         }
+        private void showResponseFunction()
+        {
+            responseFunctionDiagram.Series.Add("Функция отклика");
+            responseFunctionDiagram.Series["Функция отклика"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            for (int i = 0; i < listOfMValues.Count; i++)
+            {
+                responseFunctionDiagram.Series["Функция отклика"].Points.AddXY(listOfMValues[i], listOfAlphaValues[i]);
+            }
 
+        }
+
+        private void hideResponseFunction()
+        {
+            responseFunctionDiagram.Series["Функция отклика"].Points.Clear();
+            responseFunctionDiagram.Series.Remove(responseFunctionDiagram.Series["Функция отклика"]);
+        }
+
+        private void showResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (responseFunctionIsShow == false)
+            {
+                showResponseFunction();
+                responseFunctionIsShow = true;
+            } 
+            else
+            {
+                hideResponseFunction();
+                responseFunctionIsShow = false;
+            }
+                
+
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+
+            resizeControl(topLineSelectBoxRectangle, topLineSelectBox);
+            resizeControl(bottomLineSelectBoxRectangle, bottomLineSelectBox);
+            resizeControl(forecastResponseFunctionSelectBoxRectangle, forecastResponseFunctionSelectBox);
+            resizeControl(showResponseFunctionSelectBoxRectangle, showResponseFunctionSelectBox);
+            resizeControl(tabControl1Rectangle, tabControl1);
+            resizeControl(elevatorTableRectangle, elevatorTable);
+            resizeControl(objectDiagramPictureRectangle, objectDiagramPicture);
+            resizeControl(responseFunctionDiagramRectangle, responseFunctionDiagram);
+            for (int column = 0; column < elevatorTable.ColumnCount; column++)
+            {
+                elevatorTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            }
+
+        }
         private void resizeControl(Rectangle r, Control c)
         {
             float xRatio = (float)(this.Width) / (float)(originalFormSize.Width);
@@ -270,17 +253,18 @@ namespace CourseWorkRebuild
             c.Size = new Size(newWidth, newHeight);
         }
 
-        private void MainForm_Resize(object sender, EventArgs e)
+        private void initRectangleSettings()
         {
-            resizeControl(elevatorTableRectangle, elevatorTable);
-            resizeControl(objectDiagramPictureRectangle, objectDiagramPicture);
-            resizeControl(responseFunctionDiagramRectangle, responseFunctionDiagram);
-            for (int column = 0; column < elevatorTable.ColumnCount; column++)
-            {
-                elevatorTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                
-            }
-            
+            topLineSelectBoxRectangle = new Rectangle(topLineSelectBox.Location.X, topLineSelectBox.Location.Y, topLineSelectBox.Width, topLineSelectBox.Height);
+            bottomLineSelectBoxRectangle = new Rectangle(bottomLineSelectBox.Location.X, bottomLineSelectBox.Location.Y, bottomLineSelectBox.Width, bottomLineSelectBox.Height);
+            forecastResponseFunctionSelectBoxRectangle = new Rectangle(forecastResponseFunctionSelectBox.Location.X, forecastResponseFunctionSelectBox.Location.Y, forecastResponseFunctionSelectBox.Width, forecastResponseFunctionSelectBox.Height);
+            showResponseFunctionSelectBoxRectangle = new Rectangle(showResponseFunctionSelectBox.Location.X, showResponseFunctionSelectBox.Location.Y, showResponseFunctionSelectBox.Width, showResponseFunctionSelectBox.Height);
+            tabControl1Rectangle = new Rectangle(tabControl1.Location.X, tabControl1.Location.Y, tabControl1.Width, tabControl1.Height);
+            elevatorTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            originalFormSize = new Rectangle(this.Location.X, this.Location.Y, this.Width, this.Height);
+            elevatorTableRectangle = new Rectangle(elevatorTable.Location.X, elevatorTable.Location.Y, elevatorTable.Width, elevatorTable.Height);
+            responseFunctionDiagramRectangle = new Rectangle(responseFunctionDiagram.Location.X, responseFunctionDiagram.Location.Y, responseFunctionDiagram.Width, responseFunctionDiagram.Height);
+            objectDiagramPictureRectangle = new Rectangle(objectDiagramPicture.Location.X, objectDiagramPicture.Location.Y, objectDiagramPicture.Width, objectDiagramPicture.Height);
         }
 
     }

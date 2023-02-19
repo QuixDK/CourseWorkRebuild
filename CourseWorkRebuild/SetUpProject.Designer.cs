@@ -40,7 +40,7 @@
             this.createProjectButton.AutoSize = true;
             this.createProjectButton.Location = new System.Drawing.Point(12, 12);
             this.createProjectButton.Name = "createProjectButton";
-            this.createProjectButton.Size = new System.Drawing.Size(206, 24);
+            this.createProjectButton.Size = new System.Drawing.Size(206, 35);
             this.createProjectButton.TabIndex = 0;
             this.createProjectButton.Text = "Создать проект";
             this.createProjectButton.UseVisualStyleBackColor = true;
@@ -52,7 +52,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.openProjectButton.AutoSize = true;
-            this.openProjectButton.Location = new System.Drawing.Point(12, 42);
+            this.openProjectButton.Location = new System.Drawing.Point(12, 53);
             this.openProjectButton.Name = "openProjectButton";
             this.openProjectButton.Size = new System.Drawing.Size(206, 27);
             this.openProjectButton.TabIndex = 1;
