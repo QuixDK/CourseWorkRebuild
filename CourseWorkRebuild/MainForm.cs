@@ -12,6 +12,7 @@ using System.Data.SQLite;
 using System.Threading;
 using System.Reflection.Emit;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace CourseWorkRebuild
 {
@@ -34,8 +35,11 @@ namespace CourseWorkRebuild
         private bool isContinue = false;
         private List<Double> listOfMValues;
         private List<Double> listOfAlphaValues;
+        private List<Double> listOfBottomLineMValues;
+        private List<Double> listOfBottomLineAValues;
         private bool responseFunctionIsShow = false;
         private bool forecastResponseFunctionIsShow = false;
+        private bool bottomLineIsShow = false;
         Repository db;
         Calculations calculations;
 
@@ -50,12 +54,16 @@ namespace CourseWorkRebuild
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            System.Diagnostics.Process.GetCurrentProcess().Kill();
+            Close();
+            setUpProject.ShowDialog();
+            //System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             initRectangleSettings();
+            
+
 
             try
             {
@@ -177,6 +185,32 @@ namespace CourseWorkRebuild
 
         }
 
+        private DataGridView calculateBottomLine()
+        {
+            DataGridView bottomLineTable = new DataGridView();
+            for (int column = 0; column < dataTable.Columns.Count; column++)
+            {
+                String ColName = dataTable.Columns[column].ColumnName;
+                bottomLineTable.Columns.Add(ColName, ColName);
+                bottomLineTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+            }
+
+            for (int row = 0; row < dataTable.Rows.Count; row++)
+            {
+                bottomLineTable.Rows.Add(dataTable.Rows[row].ItemArray);
+            }
+            String T = toolStripTextBox1.Text.Split(' ')[1];
+            for (int i = 0; i < elevatorTable.Rows.Count; i++)
+            {
+                for (int j = 1; j < elevatorTable.ColumnCount; j++)
+                {
+                    bottomLineTable.Rows[i].Cells[j].Value = Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value) - Convert.ToDouble(T);
+                }
+            }
+            return bottomLineTable;
+        }
+
         private String SQL_AllTable()
         {
             return "SELECT * FROM [" + db.getTableNames() + "]";
@@ -187,9 +221,47 @@ namespace CourseWorkRebuild
             initProject.setTValue(this.toolStripTextBox1.Text);
             initProject.setAValue(this.toolStripTextBox2.Text);
         }
+
+        private void showBottomLine()
+        {
+            listOfBottomLineMValues = calculations.calculateMValues(calculateBottomLine());
+            listOfBottomLineAValues = calculations.calculateAValues(calculateBottomLine(), listOfBottomLineMValues);
+            responseFunctionDiagram.Series.Add("Нижняя граница");
+            responseFunctionDiagram.Series["Нижняя граница"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            for (int i = 0; i < listOfBottomLineMValues.Count; i++)
+            {
+                responseFunctionDiagram.Series["Нижняя граница"].Points.AddXY(listOfBottomLineMValues[i], listOfBottomLineAValues[i]);
+            }
+
+        }
+        private void hideBottomLine()
+        {
+            responseFunctionDiagram.Series["Нижняя граница"].Points.Clear();
+            responseFunctionDiagram.Series.Remove(responseFunctionDiagram.Series["Нижняя граница"]);
+        }
+
+        private void bottomLineSelectBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (bottomLineIsShow == false)
+            {
+                showBottomLine();
+                bottomLineIsShow = true;
+            }
+            else
+            {
+                hideBottomLine();
+                bottomLineIsShow = false;
+            }
+
+        }
+
         private void showResponseFunction()
         {
-            
+            responseFunctionDiagram.ChartAreas[0].AxisX.Maximum = listOfMValues.Max(); //Задаешь максимальные значения координат
+            responseFunctionDiagram.ChartAreas[0].AxisX.Minimum = listOfMValues.Min();
+            responseFunctionDiagram.ChartAreas[0].AxisY.Maximum = listOfAlphaValues.Max(); //Задаешь максимальные значения координат
+            responseFunctionDiagram.ChartAreas[0].AxisY.Minimum = listOfAlphaValues.Min();
             responseFunctionDiagram.Series.Add("Функция отклика");
             responseFunctionDiagram.Series["Функция отклика"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             for (int i = 0; i < listOfMValues.Count; i++)
@@ -303,5 +375,11 @@ namespace CourseWorkRebuild
             responseFunctionDiagramRectangle = new Rectangle(responseFunctionDiagram.Location.X, responseFunctionDiagram.Location.Y, responseFunctionDiagram.Width, responseFunctionDiagram.Height);
             objectDiagramPictureRectangle = new Rectangle(objectDiagramPicture.Location.X, objectDiagramPicture.Location.Y, objectDiagramPicture.Width, objectDiagramPicture.Height);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            calculateBottomLine();
+        }
+
     }
 }

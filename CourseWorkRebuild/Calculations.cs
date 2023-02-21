@@ -71,6 +71,8 @@ namespace CourseWorkRebuild
 
         }
 
+
+
         public List<Double> getForecastMValue(List<Double> listOfMValues, Double a)
         {
             
@@ -114,6 +116,8 @@ namespace CourseWorkRebuild
 
             return forecastAValues;
         }
+
+        
 
     }
 }

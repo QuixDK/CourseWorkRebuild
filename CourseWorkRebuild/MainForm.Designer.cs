@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.elevatorTable = new System.Windows.Forms.DataGridView();
             this.objectDiagramPicture = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -41,22 +41,22 @@
             this.saveChangesButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.listBox4 = new System.Windows.Forms.ListBox();
-            this.listBox3 = new System.Windows.Forms.ListBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.topLineSelectBox = new System.Windows.Forms.CheckBox();
             this.bottomLineSelectBox = new System.Windows.Forms.CheckBox();
             this.forecastResponseFunctionSelectBox = new System.Windows.Forms.CheckBox();
             this.showResponseFunctionSelectBox = new System.Windows.Forms.CheckBox();
             this.responseFunctionDiagram = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listBox4 = new System.Windows.Forms.ListBox();
+            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.elevatorTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.responseFunctionDiagram)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // elevatorTable
@@ -89,7 +89,7 @@
             this.toolStripTextBox2});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1237, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(1237, 31);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -97,13 +97,13 @@
             // 
             this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 23);
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 27);
             // 
             // toolStripTextBox2
             // 
             this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox2.Name = "toolStripTextBox2";
-            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 23);
+            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 27);
             // 
             // listBox1
             // 
@@ -126,7 +126,7 @@
             this.saveChangesButton.AutoSize = true;
             this.saveChangesButton.Location = new System.Drawing.Point(212, 0);
             this.saveChangesButton.Name = "saveChangesButton";
-            this.saveChangesButton.Size = new System.Drawing.Size(135, 27);
+            this.saveChangesButton.Size = new System.Drawing.Size(151, 27);
             this.saveChangesButton.TabIndex = 6;
             this.saveChangesButton.Text = "Применить изменения";
             this.saveChangesButton.UseVisualStyleBackColor = true;
@@ -159,6 +159,64 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // topLineSelectBox
+            // 
+            this.topLineSelectBox.AutoSize = true;
+            this.topLineSelectBox.Location = new System.Drawing.Point(649, 282);
+            this.topLineSelectBox.Name = "topLineSelectBox";
+            this.topLineSelectBox.Size = new System.Drawing.Size(128, 19);
+            this.topLineSelectBox.TabIndex = 14;
+            this.topLineSelectBox.Text = "Верхняя граница";
+            this.topLineSelectBox.UseVisualStyleBackColor = true;
+            // 
+            // bottomLineSelectBox
+            // 
+            this.bottomLineSelectBox.AutoSize = true;
+            this.bottomLineSelectBox.Location = new System.Drawing.Point(649, 259);
+            this.bottomLineSelectBox.Name = "bottomLineSelectBox";
+            this.bottomLineSelectBox.Size = new System.Drawing.Size(125, 19);
+            this.bottomLineSelectBox.TabIndex = 13;
+            this.bottomLineSelectBox.Text = "Нижняя граница";
+            this.bottomLineSelectBox.UseVisualStyleBackColor = true;
+            this.bottomLineSelectBox.CheckedChanged += new System.EventHandler(this.bottomLineSelectBox_CheckedChanged);
+            // 
+            // forecastResponseFunctionSelectBox
+            // 
+            this.forecastResponseFunctionSelectBox.AutoSize = true;
+            this.forecastResponseFunctionSelectBox.Location = new System.Drawing.Point(649, 236);
+            this.forecastResponseFunctionSelectBox.Name = "forecastResponseFunctionSelectBox";
+            this.forecastResponseFunctionSelectBox.Size = new System.Drawing.Size(155, 19);
+            this.forecastResponseFunctionSelectBox.TabIndex = 12;
+            this.forecastResponseFunctionSelectBox.Text = "Прогнозное значение";
+            this.forecastResponseFunctionSelectBox.UseVisualStyleBackColor = true;
+            this.forecastResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.forecastResponseFunctionSelectBox_CheckedChanged);
+            // 
+            // showResponseFunctionSelectBox
+            // 
+            this.showResponseFunctionSelectBox.AutoSize = true;
+            this.showResponseFunctionSelectBox.Location = new System.Drawing.Point(649, 213);
+            this.showResponseFunctionSelectBox.Name = "showResponseFunctionSelectBox";
+            this.showResponseFunctionSelectBox.Size = new System.Drawing.Size(129, 19);
+            this.showResponseFunctionSelectBox.TabIndex = 11;
+            this.showResponseFunctionSelectBox.Text = "Функция отклика";
+            this.showResponseFunctionSelectBox.UseVisualStyleBackColor = true;
+            this.showResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.showResponseFunctionSelectBox_CheckedChanged);
+            // 
+            // responseFunctionDiagram
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.responseFunctionDiagram.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.responseFunctionDiagram.Legends.Add(legend1);
+            this.responseFunctionDiagram.Location = new System.Drawing.Point(3, 3);
+            this.responseFunctionDiagram.Name = "responseFunctionDiagram";
+            this.responseFunctionDiagram.Size = new System.Drawing.Size(640, 303);
+            this.responseFunctionDiagram.TabIndex = 15;
+            this.responseFunctionDiagram.Text = "chart1";
+            title1.Name = "Функция Отклика";
+            title1.Text = "График";
+            this.responseFunctionDiagram.Titles.Add(title1);
             // 
             // tabPage2
             // 
@@ -200,63 +258,6 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // topLineSelectBox
-            // 
-            this.topLineSelectBox.AutoSize = true;
-            this.topLineSelectBox.Location = new System.Drawing.Point(781, 282);
-            this.topLineSelectBox.Name = "topLineSelectBox";
-            this.topLineSelectBox.Size = new System.Drawing.Size(112, 17);
-            this.topLineSelectBox.TabIndex = 14;
-            this.topLineSelectBox.Text = "Верхняя граница";
-            this.topLineSelectBox.UseVisualStyleBackColor = true;
-            // 
-            // bottomLineSelectBox
-            // 
-            this.bottomLineSelectBox.AutoSize = true;
-            this.bottomLineSelectBox.Location = new System.Drawing.Point(781, 259);
-            this.bottomLineSelectBox.Name = "bottomLineSelectBox";
-            this.bottomLineSelectBox.Size = new System.Drawing.Size(110, 17);
-            this.bottomLineSelectBox.TabIndex = 13;
-            this.bottomLineSelectBox.Text = "Нижняя граница";
-            this.bottomLineSelectBox.UseVisualStyleBackColor = true;
-            // 
-            // forecastResponseFunctionSelectBox
-            // 
-            this.forecastResponseFunctionSelectBox.AutoSize = true;
-            this.forecastResponseFunctionSelectBox.Location = new System.Drawing.Point(781, 236);
-            this.forecastResponseFunctionSelectBox.Name = "forecastResponseFunctionSelectBox";
-            this.forecastResponseFunctionSelectBox.Size = new System.Drawing.Size(137, 17);
-            this.forecastResponseFunctionSelectBox.TabIndex = 12;
-            this.forecastResponseFunctionSelectBox.Text = "Прогнозное значение";
-            this.forecastResponseFunctionSelectBox.UseVisualStyleBackColor = true;
-            this.forecastResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.forecastResponseFunctionSelectBox_CheckedChanged);
-            // 
-            // showResponseFunctionSelectBox
-            // 
-            this.showResponseFunctionSelectBox.AutoSize = true;
-            this.showResponseFunctionSelectBox.Location = new System.Drawing.Point(781, 213);
-            this.showResponseFunctionSelectBox.Name = "showResponseFunctionSelectBox";
-            this.showResponseFunctionSelectBox.Size = new System.Drawing.Size(116, 17);
-            this.showResponseFunctionSelectBox.TabIndex = 11;
-            this.showResponseFunctionSelectBox.Text = "Функция отклика";
-            this.showResponseFunctionSelectBox.UseVisualStyleBackColor = true;
-            this.showResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.showResponseFunctionSelectBox_CheckedChanged);
-            // 
-            // responseFunctionDiagram
-            // 
-            chartArea3.Name = "ChartArea1";
-            this.responseFunctionDiagram.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.responseFunctionDiagram.Legends.Add(legend3);
-            this.responseFunctionDiagram.Location = new System.Drawing.Point(3, 3);
-            this.responseFunctionDiagram.Name = "responseFunctionDiagram";
-            this.responseFunctionDiagram.Size = new System.Drawing.Size(915, 303);
-            this.responseFunctionDiagram.TabIndex = 15;
-            this.responseFunctionDiagram.Text = "chart1";
-            title3.Name = "Функция Отклика";
-            title3.Text = "График";
-            this.responseFunctionDiagram.Titles.Add(title3);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -279,8 +280,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.responseFunctionDiagram)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
