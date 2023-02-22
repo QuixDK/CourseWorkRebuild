@@ -143,7 +143,7 @@ namespace CourseWorkRebuild
                     listBox18.Items.Add("В пределе");
                 }
                 else listBox18.Items.Add("Выход за границу");
-
+                //
             }
         }
 
