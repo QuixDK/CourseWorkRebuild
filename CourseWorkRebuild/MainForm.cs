@@ -37,9 +37,13 @@ namespace CourseWorkRebuild
         private List<Double> listOfAlphaValues;
         private List<Double> listOfBottomLineMValues;
         private List<Double> listOfBottomLineAValues;
+        private List<Double> listOfTopLineMValues;
+        private List<Double> listOfTopLineAValues;
         private bool responseFunctionIsShow = false;
         private bool forecastResponseFunctionIsShow = false;
         private bool bottomLineIsShow = false;
+        private bool topLineIsShow = false;
+        ChartDiagramService chartDiagramService = new ChartDiagramService();
         Repository db;
         Calculations calculations;
 
@@ -54,9 +58,7 @@ namespace CourseWorkRebuild
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Close();
-            setUpProject.ShowDialog();
-            //System.Diagnostics.Process.GetCurrentProcess().Kill();
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -107,7 +109,7 @@ namespace CourseWorkRebuild
             sqlConnection = db.getDbConnection();
             
             loadObjectDiagram();
-            showTable(SQL_AllTable());
+            db.showTable(SQL_AllTable(), dataTable, db, elevatorTable);
             initTAndAValues();
             showMValues();
             showAValues();
@@ -144,73 +146,6 @@ namespace CourseWorkRebuild
             this.toolStripTextBox2.Text = "a: " + initProject.getValueOfa();
         }
 
-        private void showTable(String SQLQuery)
-        {
-
-            dataTable.Rows.Clear();
-            dataTable.Columns.Clear();
-            SQLiteCommand command = new SQLiteCommand(sqlConnection);
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter(SQLQuery, sqlConnection);
-            adapter.Fill(dataTable);
-
-            for (int i = 1; i < dataTable.Columns.Count; i++)
-            {
-                String replaceCommosToDots = "UPDATE [" + db.getTableNames() + "] SET[" + i + "] = REPLACE([" + i + "],',','.')";
-                command.CommandText = replaceCommosToDots;
-                command.ExecuteNonQuery();
-                Thread.Sleep(10);
-            }
-
-            dataTable.Rows.Clear();
-            dataTable.Columns.Clear();
-
-            adapter = new SQLiteDataAdapter(SQLQuery, sqlConnection);
-            adapter.Fill(dataTable);
-
-            elevatorTable.Columns.Clear();
-            elevatorTable.Rows.Clear();
-            
-            for (int column = 0; column < dataTable.Columns.Count; column++)
-            {
-                String ColName = dataTable.Columns[column].ColumnName;
-                elevatorTable.Columns.Add(ColName, ColName);
-                elevatorTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            }
-
-            for (int row = 0; row < dataTable.Rows.Count; row++)
-            {
-                elevatorTable.Rows.Add(dataTable.Rows[row].ItemArray);
-            }
-
-        }
-
-        private DataGridView calculateBottomLine()
-        {
-            DataGridView bottomLineTable = new DataGridView();
-            for (int column = 0; column < dataTable.Columns.Count; column++)
-            {
-                String ColName = dataTable.Columns[column].ColumnName;
-                bottomLineTable.Columns.Add(ColName, ColName);
-                bottomLineTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            }
-
-            for (int row = 0; row < dataTable.Rows.Count; row++)
-            {
-                bottomLineTable.Rows.Add(dataTable.Rows[row].ItemArray);
-            }
-            String T = toolStripTextBox1.Text.Split(' ')[1];
-            for (int i = 0; i < elevatorTable.Rows.Count; i++)
-            {
-                for (int j = 1; j < elevatorTable.ColumnCount; j++)
-                {
-                    bottomLineTable.Rows[i].Cells[j].Value = Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value) - Convert.ToDouble(T);
-                }
-            }
-            return bottomLineTable;
-        }
-
         private String SQL_AllTable()
         {
             return "SELECT * FROM [" + db.getTableNames() + "]";
@@ -222,22 +157,20 @@ namespace CourseWorkRebuild
             initProject.setAValue(this.toolStripTextBox2.Text);
         }
 
-        private void showBottomLine()
+        private void topLineSelectBox_CheckedChanged(object sender, EventArgs e)
         {
-            listOfBottomLineMValues = calculations.calculateMValues(calculateBottomLine());
-            listOfBottomLineAValues = calculations.calculateAValues(calculateBottomLine(), listOfBottomLineMValues);
-            responseFunctionDiagram.Series.Add("Нижняя граница");
-            responseFunctionDiagram.Series["Нижняя граница"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            for (int i = 0; i < listOfBottomLineMValues.Count; i++)
+
+            if (topLineIsShow == false)
             {
-                responseFunctionDiagram.Series["Нижняя граница"].Points.AddXY(listOfBottomLineMValues[i], listOfBottomLineAValues[i]);
+                chartDiagramService.addTopLine(listOfTopLineMValues, listOfTopLineAValues, calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams);
+                topLineIsShow = true;
+            }
+            else
+            {
+                chartDiagramService.removeTopLine(functionDiagrams);
+                topLineIsShow = false;
             }
 
-        }
-        private void hideBottomLine()
-        {
-            responseFunctionDiagram.Series["Нижняя граница"].Points.Clear();
-            responseFunctionDiagram.Series.Remove(responseFunctionDiagram.Series["Нижняя граница"]);
         }
 
         private void bottomLineSelectBox_CheckedChanged(object sender, EventArgs e)
@@ -245,36 +178,15 @@ namespace CourseWorkRebuild
 
             if (bottomLineIsShow == false)
             {
-                showBottomLine();
+                chartDiagramService.addBottomLine(listOfBottomLineMValues, listOfBottomLineAValues, calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams);
                 bottomLineIsShow = true;
             }
             else
             {
-                hideBottomLine();
+                chartDiagramService.removeBottomLine(functionDiagrams);
                 bottomLineIsShow = false;
             }
 
-        }
-
-        private void showResponseFunction()
-        {
-            responseFunctionDiagram.ChartAreas[0].AxisX.Maximum = listOfMValues.Max(); //Задаешь максимальные значения координат
-            responseFunctionDiagram.ChartAreas[0].AxisX.Minimum = listOfMValues.Min();
-            responseFunctionDiagram.ChartAreas[0].AxisY.Maximum = listOfAlphaValues.Max(); //Задаешь максимальные значения координат
-            responseFunctionDiagram.ChartAreas[0].AxisY.Minimum = listOfAlphaValues.Min();
-            responseFunctionDiagram.Series.Add("Функция отклика");
-            responseFunctionDiagram.Series["Функция отклика"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            for (int i = 0; i < listOfMValues.Count; i++)
-            {
-                responseFunctionDiagram.Series["Функция отклика"].Points.AddXY(listOfMValues[i], listOfAlphaValues[i]);
-            }
-
-        }
-
-        private void hideResponseFunction()
-        {
-            responseFunctionDiagram.Series["Функция отклика"].Points.Clear();
-            responseFunctionDiagram.Series.Remove(responseFunctionDiagram.Series["Функция отклика"]);
         }
 
         private void showResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
@@ -282,12 +194,12 @@ namespace CourseWorkRebuild
 
             if (responseFunctionIsShow == false)
             {
-                showResponseFunction();
+                chartDiagramService.addResponseFunction(listOfMValues, listOfAlphaValues, elevatorTable, functionDiagrams);
                 responseFunctionIsShow = true;
             } 
             else
             {
-                hideResponseFunction();
+                chartDiagramService.removeResponseFunction(functionDiagrams);
                 responseFunctionIsShow = false;
             }
 
@@ -296,37 +208,14 @@ namespace CourseWorkRebuild
         {
             if (forecastResponseFunctionIsShow == false)
             {
-                showforecastResponseFunction();
+                chartDiagramService.addforecastResponseFunction(listOfMValues, listOfAlphaValues, functionDiagrams, toolStripTextBox2);
                 forecastResponseFunctionIsShow = true;
             }
             else
             {
-                hideforecastResponseFunction();
+                chartDiagramService.removeforecastResponseFunction(functionDiagrams);
                 forecastResponseFunctionIsShow = false;
             }
-        }
-
-        private void showforecastResponseFunction()
-        {
-            List<Double> forecastMValue = new List<Double>();
-            List<Double> forecastAValue = new List<Double>();
-            String a = toolStripTextBox2.Text.Split(' ')[1];
-            forecastMValue = calculations.getForecastMValue(listOfMValues, Convert.ToDouble(a));
-            forecastAValue = calculations.getForecastAValue(listOfAlphaValues, Convert.ToDouble(a));
-
-            responseFunctionDiagram.Series.Add("Прогнозное значение");
-            responseFunctionDiagram.Series["Прогнозное значение"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            for (int i = 0; i < forecastMValue.Count-1;i++)
-            {
-               responseFunctionDiagram.Series["Прогнозное значение"].Points.AddXY(forecastMValue[i], forecastAValue[i]);
-            }
-           
-        }
-
-        private void hideforecastResponseFunction()
-        {
-            responseFunctionDiagram.Series["Прогнозное значение"].Points.Clear();
-            responseFunctionDiagram.Series.Remove(responseFunctionDiagram.Series["Прогнозное значение"]);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -339,7 +228,7 @@ namespace CourseWorkRebuild
             resizeControl(tabControl1Rectangle, tabControl1);
             resizeControl(elevatorTableRectangle, elevatorTable);
             resizeControl(objectDiagramPictureRectangle, objectDiagramPicture);
-            resizeControl(responseFunctionDiagramRectangle, responseFunctionDiagram);
+            resizeControl(responseFunctionDiagramRectangle, functionDiagrams);
             for (int column = 0; column < elevatorTable.ColumnCount; column++)
             {
                 elevatorTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -372,13 +261,8 @@ namespace CourseWorkRebuild
             elevatorTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             originalFormSize = new Rectangle(this.Location.X, this.Location.Y, this.Width, this.Height);
             elevatorTableRectangle = new Rectangle(elevatorTable.Location.X, elevatorTable.Location.Y, elevatorTable.Width, elevatorTable.Height);
-            responseFunctionDiagramRectangle = new Rectangle(responseFunctionDiagram.Location.X, responseFunctionDiagram.Location.Y, responseFunctionDiagram.Width, responseFunctionDiagram.Height);
+            responseFunctionDiagramRectangle = new Rectangle(functionDiagrams.Location.X, functionDiagrams.Location.Y, functionDiagrams.Width, functionDiagrams.Height);
             objectDiagramPictureRectangle = new Rectangle(objectDiagramPicture.Location.X, objectDiagramPicture.Location.Y, objectDiagramPicture.Width, objectDiagramPicture.Height);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            calculateBottomLine();
         }
 
     }

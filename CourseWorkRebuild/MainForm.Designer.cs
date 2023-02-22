@@ -45,7 +45,7 @@
             this.bottomLineSelectBox = new System.Windows.Forms.CheckBox();
             this.forecastResponseFunctionSelectBox = new System.Windows.Forms.CheckBox();
             this.showResponseFunctionSelectBox = new System.Windows.Forms.CheckBox();
-            this.responseFunctionDiagram = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.functionDiagrams = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listBox4 = new System.Windows.Forms.ListBox();
             this.listBox3 = new System.Windows.Forms.ListBox();
@@ -55,7 +55,7 @@
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.responseFunctionDiagram)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.functionDiagrams)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -151,7 +151,7 @@
             this.tabPage1.Controls.Add(this.showResponseFunctionSelectBox);
             this.tabPage1.Controls.Add(this.objectDiagramPicture);
             this.tabPage1.Controls.Add(this.elevatorTable);
-            this.tabPage1.Controls.Add(this.responseFunctionDiagram);
+            this.tabPage1.Controls.Add(this.functionDiagrams);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -169,6 +169,7 @@
             this.topLineSelectBox.TabIndex = 14;
             this.topLineSelectBox.Text = "Верхняя граница";
             this.topLineSelectBox.UseVisualStyleBackColor = true;
+            this.topLineSelectBox.CheckedChanged += new System.EventHandler(this.topLineSelectBox_CheckedChanged);
             // 
             // bottomLineSelectBox
             // 
@@ -203,20 +204,20 @@
             this.showResponseFunctionSelectBox.UseVisualStyleBackColor = true;
             this.showResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.showResponseFunctionSelectBox_CheckedChanged);
             // 
-            // responseFunctionDiagram
+            // functionDiagrams
             // 
             chartArea1.Name = "ChartArea1";
-            this.responseFunctionDiagram.ChartAreas.Add(chartArea1);
+            this.functionDiagrams.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
-            this.responseFunctionDiagram.Legends.Add(legend1);
-            this.responseFunctionDiagram.Location = new System.Drawing.Point(3, 3);
-            this.responseFunctionDiagram.Name = "responseFunctionDiagram";
-            this.responseFunctionDiagram.Size = new System.Drawing.Size(640, 303);
-            this.responseFunctionDiagram.TabIndex = 15;
-            this.responseFunctionDiagram.Text = "chart1";
+            this.functionDiagrams.Legends.Add(legend1);
+            this.functionDiagrams.Location = new System.Drawing.Point(3, 3);
+            this.functionDiagrams.Name = "functionDiagrams";
+            this.functionDiagrams.Size = new System.Drawing.Size(640, 303);
+            this.functionDiagrams.TabIndex = 15;
+            this.functionDiagrams.Text = "chart1";
             title1.Name = "Функция Отклика";
             title1.Text = "График";
-            this.responseFunctionDiagram.Titles.Add(title1);
+            this.functionDiagrams.Titles.Add(title1);
             // 
             // tabPage2
             // 
@@ -280,7 +281,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.responseFunctionDiagram)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.functionDiagrams)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -306,7 +307,7 @@
         private System.Windows.Forms.CheckBox bottomLineSelectBox;
         private System.Windows.Forms.CheckBox forecastResponseFunctionSelectBox;
         private System.Windows.Forms.CheckBox showResponseFunctionSelectBox;
-        private System.Windows.Forms.DataVisualization.Charting.Chart responseFunctionDiagram;
+        private System.Windows.Forms.DataVisualization.Charting.Chart functionDiagrams;
     }
 }
 

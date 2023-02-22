@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -117,7 +118,56 @@ namespace CourseWorkRebuild
             return forecastAValues;
         }
 
-        
+        public DataGridView calculateBottomLine(DataTable dataTable, ToolStripTextBox toolStripTextBox1, DataGridView elevatorTable)
+        {
+            DataGridView bottomLineTable = new DataGridView();
+            for (int column = 0; column < dataTable.Columns.Count; column++)
+            {
+                String ColName = dataTable.Columns[column].ColumnName;
+                bottomLineTable.Columns.Add(ColName, ColName);
+                bottomLineTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
+
+            for (int row = 0; row < dataTable.Rows.Count; row++)
+            {
+                bottomLineTable.Rows.Add(dataTable.Rows[row].ItemArray);
+            }
+            String T = toolStripTextBox1.Text.Split(' ')[1];
+            for (int i = 0; i < elevatorTable.Rows.Count; i++)
+            {
+                for (int j = 1; j < elevatorTable.ColumnCount; j++)
+                {
+                    bottomLineTable.Rows[i].Cells[j].Value = Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value) - Convert.ToDouble(T);
+                }
+            }
+            return bottomLineTable;
+        }
+        public DataGridView calculateTopLine(DataTable dataTable, ToolStripTextBox toolStripTextBox1, DataGridView elevatorTable)
+        {
+            DataGridView bottomLineTable = new DataGridView();
+            for (int column = 0; column < dataTable.Columns.Count; column++)
+            {
+                String ColName = dataTable.Columns[column].ColumnName;
+                bottomLineTable.Columns.Add(ColName, ColName);
+                bottomLineTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+            }
+
+            for (int row = 0; row < dataTable.Rows.Count; row++)
+            {
+                bottomLineTable.Rows.Add(dataTable.Rows[row].ItemArray);
+            }
+            String T = toolStripTextBox1.Text.Split(' ')[1];
+            for (int i = 0; i < elevatorTable.Rows.Count; i++)
+            {
+                for (int j = 1; j < elevatorTable.ColumnCount; j++)
+                {
+                    bottomLineTable.Rows[i].Cells[j].Value = Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value) + Convert.ToDouble(T);
+                }
+            }
+            return bottomLineTable;
+        }
+
 
     }
 }
