@@ -28,11 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.elevatorTable = new System.Windows.Forms.DataGridView();
-            this.objectDiagramPicture = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
@@ -41,45 +40,60 @@
             this.saveChangesButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.objectDiagramPicture = new System.Windows.Forms.PictureBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.listBox12 = new System.Windows.Forms.ListBox();
+            this.listBox11 = new System.Windows.Forms.ListBox();
+            this.listBox10 = new System.Windows.Forms.ListBox();
+            this.listBox9 = new System.Windows.Forms.ListBox();
+            this.listBox8 = new System.Windows.Forms.ListBox();
+            this.listBox7 = new System.Windows.Forms.ListBox();
+            this.listBox6 = new System.Windows.Forms.ListBox();
+            this.listBox5 = new System.Windows.Forms.ListBox();
+            this.listBox4 = new System.Windows.Forms.ListBox();
+            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.forecastTopLineValues = new System.Windows.Forms.CheckBox();
             this.forecastBottomLineValues = new System.Windows.Forms.CheckBox();
             this.topLineSelectBox = new System.Windows.Forms.CheckBox();
             this.bottomLineSelectBox = new System.Windows.Forms.CheckBox();
             this.forecastResponseFunctionSelectBox = new System.Windows.Forms.CheckBox();
             this.showResponseFunctionSelectBox = new System.Windows.Forms.CheckBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.listBox4 = new System.Windows.Forms.ListBox();
-            this.listBox3 = new System.Windows.Forms.ListBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.functionDiagrams = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.listBox5 = new System.Windows.Forms.ListBox();
-            this.listBox6 = new System.Windows.Forms.ListBox();
-            this.listBox7 = new System.Windows.Forms.ListBox();
-            this.listBox8 = new System.Windows.Forms.ListBox();
-            this.listBox9 = new System.Windows.Forms.ListBox();
-            this.listBox10 = new System.Windows.Forms.ListBox();
-            this.listBox11 = new System.Windows.Forms.ListBox();
-            this.listBox12 = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.forecastTopLineValues = new System.Windows.Forms.CheckBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.listBox17 = new System.Windows.Forms.ListBox();
+            this.listBox16 = new System.Windows.Forms.ListBox();
+            this.listBox15 = new System.Windows.Forms.ListBox();
+            this.listBox14 = new System.Windows.Forms.ListBox();
+            this.listBox13 = new System.Windows.Forms.ListBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.listBox18 = new System.Windows.Forms.ListBox();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.elevatorTable)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.functionDiagrams)).BeginInit();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // elevatorTable
@@ -94,15 +108,6 @@
             this.elevatorTable.RowHeadersWidth = 51;
             this.elevatorTable.Size = new System.Drawing.Size(1221, 241);
             this.elevatorTable.TabIndex = 1;
-            // 
-            // objectDiagramPicture
-            // 
-            this.objectDiagramPicture.Location = new System.Drawing.Point(924, 6);
-            this.objectDiagramPicture.Name = "objectDiagramPicture";
-            this.objectDiagramPicture.Size = new System.Drawing.Size(300, 300);
-            this.objectDiagramPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.objectDiagramPicture.TabIndex = 2;
-            this.objectDiagramPicture.TabStop = false;
             // 
             // menuStrip1
             // 
@@ -160,6 +165,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(0, 30);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -168,12 +174,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.forecastTopLineValues);
-            this.tabPage1.Controls.Add(this.forecastBottomLineValues);
-            this.tabPage1.Controls.Add(this.topLineSelectBox);
-            this.tabPage1.Controls.Add(this.bottomLineSelectBox);
-            this.tabPage1.Controls.Add(this.forecastResponseFunctionSelectBox);
-            this.tabPage1.Controls.Add(this.showResponseFunctionSelectBox);
             this.tabPage1.Controls.Add(this.objectDiagramPicture);
             this.tabPage1.Controls.Add(this.elevatorTable);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -184,60 +184,13 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // forecastBottomLineValues
+            // objectDiagramPicture
             // 
-            this.forecastBottomLineValues.AutoSize = true;
-            this.forecastBottomLineValues.Location = new System.Drawing.Point(649, 233);
-            this.forecastBottomLineValues.Name = "forecastBottomLineValues";
-            this.forecastBottomLineValues.Size = new System.Drawing.Size(224, 17);
-            this.forecastBottomLineValues.TabIndex = 15;
-            this.forecastBottomLineValues.Text = "Прогнозное значение нижней границы";
-            this.forecastBottomLineValues.UseVisualStyleBackColor = true;
-            this.forecastBottomLineValues.CheckedChanged += new System.EventHandler(this.forecastBottomValues_CheckedChanged);
-            // 
-            // topLineSelectBox
-            // 
-            this.topLineSelectBox.AutoSize = true;
-            this.topLineSelectBox.Location = new System.Drawing.Point(649, 256);
-            this.topLineSelectBox.Name = "topLineSelectBox";
-            this.topLineSelectBox.Size = new System.Drawing.Size(112, 17);
-            this.topLineSelectBox.TabIndex = 14;
-            this.topLineSelectBox.Text = "Верхняя граница";
-            this.topLineSelectBox.UseVisualStyleBackColor = true;
-            this.topLineSelectBox.CheckedChanged += new System.EventHandler(this.topLineSelectBox_CheckedChanged);
-            // 
-            // bottomLineSelectBox
-            // 
-            this.bottomLineSelectBox.AutoSize = true;
-            this.bottomLineSelectBox.Location = new System.Drawing.Point(649, 210);
-            this.bottomLineSelectBox.Name = "bottomLineSelectBox";
-            this.bottomLineSelectBox.Size = new System.Drawing.Size(110, 17);
-            this.bottomLineSelectBox.TabIndex = 13;
-            this.bottomLineSelectBox.Text = "Нижняя граница";
-            this.bottomLineSelectBox.UseVisualStyleBackColor = true;
-            this.bottomLineSelectBox.CheckedChanged += new System.EventHandler(this.bottomLineSelectBox_CheckedChanged);
-            // 
-            // forecastResponseFunctionSelectBox
-            // 
-            this.forecastResponseFunctionSelectBox.AutoSize = true;
-            this.forecastResponseFunctionSelectBox.Location = new System.Drawing.Point(649, 187);
-            this.forecastResponseFunctionSelectBox.Name = "forecastResponseFunctionSelectBox";
-            this.forecastResponseFunctionSelectBox.Size = new System.Drawing.Size(137, 17);
-            this.forecastResponseFunctionSelectBox.TabIndex = 12;
-            this.forecastResponseFunctionSelectBox.Text = "Прогнозное значение";
-            this.forecastResponseFunctionSelectBox.UseVisualStyleBackColor = true;
-            this.forecastResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.forecastResponseFunctionSelectBox_CheckedChanged);
-            // 
-            // showResponseFunctionSelectBox
-            // 
-            this.showResponseFunctionSelectBox.AutoSize = true;
-            this.showResponseFunctionSelectBox.Location = new System.Drawing.Point(649, 164);
-            this.showResponseFunctionSelectBox.Name = "showResponseFunctionSelectBox";
-            this.showResponseFunctionSelectBox.Size = new System.Drawing.Size(116, 17);
-            this.showResponseFunctionSelectBox.TabIndex = 11;
-            this.showResponseFunctionSelectBox.Text = "Функция отклика";
-            this.showResponseFunctionSelectBox.UseVisualStyleBackColor = true;
-            this.showResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.showResponseFunctionSelectBox_CheckedChanged);
+            this.objectDiagramPicture.Location = new System.Drawing.Point(248, 6);
+            this.objectDiagramPicture.Name = "objectDiagramPicture";
+            this.objectDiagramPicture.Size = new System.Drawing.Size(735, 300);
+            this.objectDiagramPicture.TabIndex = 2;
+            this.objectDiagramPicture.TabStop = false;
             // 
             // tabPage2
             // 
@@ -273,6 +226,178 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(1100, 290);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(66, 13);
+            this.label12.TabIndex = 27;
+            this.label12.Text = "Прогноз (А)";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(1009, 290);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(68, 13);
+            this.label11.TabIndex = 26;
+            this.label11.Text = "Прогноз (М)";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(900, 290);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(106, 13);
+            this.label10.TabIndex = 25;
+            this.label10.Text = "Верхняя граница(А)";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(786, 290);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(108, 13);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "Верхняя граница(М)";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(695, 290);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(66, 13);
+            this.label8.TabIndex = 23;
+            this.label8.Text = "Прогноз (А)";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(607, 290);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(68, 13);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Прогноз (М)";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(497, 290);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(104, 13);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "Нижняя граница(А)";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(385, 290);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(106, 13);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "Нижняя граница(М)";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(294, 290);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(66, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Прогноз (А)";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(200, 290);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 13);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "Прогноз (М)";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(107, 290);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Ф-ия отклика(А)";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 290);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Ф-ия отклика(М)";
+            // 
+            // listBox12
+            // 
+            this.listBox12.FormattingEnabled = true;
+            this.listBox12.Location = new System.Drawing.Point(1103, 6);
+            this.listBox12.Name = "listBox12";
+            this.listBox12.Size = new System.Drawing.Size(85, 277);
+            this.listBox12.TabIndex = 15;
+            // 
+            // listBox11
+            // 
+            this.listBox11.FormattingEnabled = true;
+            this.listBox11.Location = new System.Drawing.Point(1012, 6);
+            this.listBox11.Name = "listBox11";
+            this.listBox11.Size = new System.Drawing.Size(85, 277);
+            this.listBox11.TabIndex = 14;
+            // 
+            // listBox10
+            // 
+            this.listBox10.FormattingEnabled = true;
+            this.listBox10.Location = new System.Drawing.Point(900, 6);
+            this.listBox10.Name = "listBox10";
+            this.listBox10.Size = new System.Drawing.Size(106, 277);
+            this.listBox10.TabIndex = 13;
+            // 
+            // listBox9
+            // 
+            this.listBox9.FormattingEnabled = true;
+            this.listBox9.Location = new System.Drawing.Point(789, 6);
+            this.listBox9.Name = "listBox9";
+            this.listBox9.Size = new System.Drawing.Size(105, 277);
+            this.listBox9.TabIndex = 12;
+            // 
+            // listBox8
+            // 
+            this.listBox8.FormattingEnabled = true;
+            this.listBox8.Location = new System.Drawing.Point(698, 6);
+            this.listBox8.Name = "listBox8";
+            this.listBox8.Size = new System.Drawing.Size(85, 277);
+            this.listBox8.TabIndex = 11;
+            // 
+            // listBox7
+            // 
+            this.listBox7.FormattingEnabled = true;
+            this.listBox7.Location = new System.Drawing.Point(607, 6);
+            this.listBox7.Name = "listBox7";
+            this.listBox7.Size = new System.Drawing.Size(85, 277);
+            this.listBox7.TabIndex = 10;
+            // 
+            // listBox6
+            // 
+            this.listBox6.FormattingEnabled = true;
+            this.listBox6.Location = new System.Drawing.Point(497, 6);
+            this.listBox6.Name = "listBox6";
+            this.listBox6.Size = new System.Drawing.Size(104, 277);
+            this.listBox6.TabIndex = 9;
+            // 
+            // listBox5
+            // 
+            this.listBox5.FormattingEnabled = true;
+            this.listBox5.Location = new System.Drawing.Point(388, 6);
+            this.listBox5.Name = "listBox5";
+            this.listBox5.Size = new System.Drawing.Size(103, 277);
+            this.listBox5.TabIndex = 8;
+            // 
             // listBox4
             // 
             this.listBox4.FormattingEnabled = true;
@@ -291,6 +416,12 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.forecastTopLineValues);
+            this.tabPage3.Controls.Add(this.forecastBottomLineValues);
+            this.tabPage3.Controls.Add(this.topLineSelectBox);
+            this.tabPage3.Controls.Add(this.bottomLineSelectBox);
+            this.tabPage3.Controls.Add(this.forecastResponseFunctionSelectBox);
+            this.tabPage3.Controls.Add(this.showResponseFunctionSelectBox);
             this.tabPage3.Controls.Add(this.functionDiagrams);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
@@ -300,203 +431,210 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // forecastTopLineValues
+            // 
+            this.forecastTopLineValues.AutoSize = true;
+            this.forecastTopLineValues.Location = new System.Drawing.Point(993, 535);
+            this.forecastTopLineValues.Name = "forecastTopLineValues";
+            this.forecastTopLineValues.Size = new System.Drawing.Size(227, 17);
+            this.forecastTopLineValues.TabIndex = 22;
+            this.forecastTopLineValues.Text = "Прогнозное значение верхней границы";
+            this.forecastTopLineValues.UseVisualStyleBackColor = true;
+            this.forecastTopLineValues.CheckedChanged += new System.EventHandler(this.forecastTopLineValues_CheckedChanged);
+            // 
+            // forecastBottomLineValues
+            // 
+            this.forecastBottomLineValues.AutoSize = true;
+            this.forecastBottomLineValues.Location = new System.Drawing.Point(993, 489);
+            this.forecastBottomLineValues.Name = "forecastBottomLineValues";
+            this.forecastBottomLineValues.Size = new System.Drawing.Size(224, 17);
+            this.forecastBottomLineValues.TabIndex = 21;
+            this.forecastBottomLineValues.Text = "Прогнозное значение нижней границы";
+            this.forecastBottomLineValues.UseVisualStyleBackColor = true;
+            this.forecastBottomLineValues.CheckedChanged += new System.EventHandler(this.forecastBottomValues_CheckedChanged);
+            // 
+            // topLineSelectBox
+            // 
+            this.topLineSelectBox.AutoSize = true;
+            this.topLineSelectBox.Location = new System.Drawing.Point(993, 512);
+            this.topLineSelectBox.Name = "topLineSelectBox";
+            this.topLineSelectBox.Size = new System.Drawing.Size(112, 17);
+            this.topLineSelectBox.TabIndex = 20;
+            this.topLineSelectBox.Text = "Верхняя граница";
+            this.topLineSelectBox.UseVisualStyleBackColor = true;
+            this.topLineSelectBox.CheckedChanged += new System.EventHandler(this.topLineSelectBox_CheckedChanged);
+            // 
+            // bottomLineSelectBox
+            // 
+            this.bottomLineSelectBox.AutoSize = true;
+            this.bottomLineSelectBox.Location = new System.Drawing.Point(993, 466);
+            this.bottomLineSelectBox.Name = "bottomLineSelectBox";
+            this.bottomLineSelectBox.Size = new System.Drawing.Size(110, 17);
+            this.bottomLineSelectBox.TabIndex = 19;
+            this.bottomLineSelectBox.Text = "Нижняя граница";
+            this.bottomLineSelectBox.UseVisualStyleBackColor = true;
+            this.bottomLineSelectBox.CheckedChanged += new System.EventHandler(this.bottomLineSelectBox_CheckedChanged);
+            // 
+            // forecastResponseFunctionSelectBox
+            // 
+            this.forecastResponseFunctionSelectBox.AutoSize = true;
+            this.forecastResponseFunctionSelectBox.Location = new System.Drawing.Point(993, 443);
+            this.forecastResponseFunctionSelectBox.Name = "forecastResponseFunctionSelectBox";
+            this.forecastResponseFunctionSelectBox.Size = new System.Drawing.Size(137, 17);
+            this.forecastResponseFunctionSelectBox.TabIndex = 18;
+            this.forecastResponseFunctionSelectBox.Text = "Прогнозное значение";
+            this.forecastResponseFunctionSelectBox.UseVisualStyleBackColor = true;
+            this.forecastResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.forecastResponseFunctionSelectBox_CheckedChanged);
+            // 
+            // showResponseFunctionSelectBox
+            // 
+            this.showResponseFunctionSelectBox.AutoSize = true;
+            this.showResponseFunctionSelectBox.Location = new System.Drawing.Point(993, 420);
+            this.showResponseFunctionSelectBox.Name = "showResponseFunctionSelectBox";
+            this.showResponseFunctionSelectBox.Size = new System.Drawing.Size(116, 17);
+            this.showResponseFunctionSelectBox.TabIndex = 17;
+            this.showResponseFunctionSelectBox.Text = "Функция отклика";
+            this.showResponseFunctionSelectBox.UseVisualStyleBackColor = true;
+            this.showResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.showResponseFunctionSelectBox_CheckedChanged);
+            // 
             // functionDiagrams
             // 
-            chartArea2.Name = "ChartArea1";
-            this.functionDiagrams.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.functionDiagrams.Legends.Add(legend2);
+            chartArea3.Name = "ChartArea1";
+            this.functionDiagrams.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.functionDiagrams.Legends.Add(legend3);
             this.functionDiagrams.Location = new System.Drawing.Point(3, 6);
             this.functionDiagrams.Name = "functionDiagrams";
             this.functionDiagrams.Size = new System.Drawing.Size(1218, 551);
             this.functionDiagrams.TabIndex = 16;
             this.functionDiagrams.Text = "chart1";
-            title2.Name = "Функция Отклика";
-            title2.Text = "График";
-            this.functionDiagrams.Titles.Add(title2);
+            title3.Name = "Функция Отклика";
+            title3.Text = "График";
+            this.functionDiagrams.Titles.Add(title3);
             // 
-            // listBox5
+            // tabPage4
             // 
-            this.listBox5.FormattingEnabled = true;
-            this.listBox5.Location = new System.Drawing.Point(388, 6);
-            this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(103, 277);
-            this.listBox5.TabIndex = 8;
+            this.tabPage4.Controls.Add(this.label18);
+            this.tabPage4.Controls.Add(this.listBox18);
+            this.tabPage4.Controls.Add(this.label17);
+            this.tabPage4.Controls.Add(this.label16);
+            this.tabPage4.Controls.Add(this.label15);
+            this.tabPage4.Controls.Add(this.label14);
+            this.tabPage4.Controls.Add(this.label13);
+            this.tabPage4.Controls.Add(this.listBox17);
+            this.tabPage4.Controls.Add(this.listBox16);
+            this.tabPage4.Controls.Add(this.listBox15);
+            this.tabPage4.Controls.Add(this.listBox14);
+            this.tabPage4.Controls.Add(this.listBox13);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1229, 567);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "1 уровень";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // listBox6
+            // label13
             // 
-            this.listBox6.FormattingEnabled = true;
-            this.listBox6.Location = new System.Drawing.Point(497, 6);
-            this.listBox6.Name = "listBox6";
-            this.listBox6.Size = new System.Drawing.Size(104, 277);
-            this.listBox6.TabIndex = 9;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(8, 15);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(40, 13);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "M(низ)";
             // 
-            // listBox7
+            // listBox17
             // 
-            this.listBox7.FormattingEnabled = true;
-            this.listBox7.Location = new System.Drawing.Point(607, 6);
-            this.listBox7.Name = "listBox7";
-            this.listBox7.Size = new System.Drawing.Size(85, 277);
-            this.listBox7.TabIndex = 10;
+            this.listBox17.FormattingEnabled = true;
+            this.listBox17.Location = new System.Drawing.Point(474, 31);
+            this.listBox17.Name = "listBox17";
+            this.listBox17.Size = new System.Drawing.Size(112, 277);
+            this.listBox17.TabIndex = 4;
             // 
-            // listBox8
+            // listBox16
             // 
-            this.listBox8.FormattingEnabled = true;
-            this.listBox8.Location = new System.Drawing.Point(698, 6);
-            this.listBox8.Name = "listBox8";
-            this.listBox8.Size = new System.Drawing.Size(85, 277);
-            this.listBox8.TabIndex = 11;
+            this.listBox16.FormattingEnabled = true;
+            this.listBox16.Location = new System.Drawing.Point(357, 31);
+            this.listBox16.Name = "listBox16";
+            this.listBox16.Size = new System.Drawing.Size(111, 277);
+            this.listBox16.TabIndex = 3;
             // 
-            // listBox9
+            // listBox15
             // 
-            this.listBox9.FormattingEnabled = true;
-            this.listBox9.Location = new System.Drawing.Point(789, 6);
-            this.listBox9.Name = "listBox9";
-            this.listBox9.Size = new System.Drawing.Size(105, 277);
-            this.listBox9.TabIndex = 12;
+            this.listBox15.FormattingEnabled = true;
+            this.listBox15.Location = new System.Drawing.Point(240, 31);
+            this.listBox15.Name = "listBox15";
+            this.listBox15.Size = new System.Drawing.Size(111, 277);
+            this.listBox15.TabIndex = 2;
             // 
-            // listBox10
+            // listBox14
             // 
-            this.listBox10.FormattingEnabled = true;
-            this.listBox10.Location = new System.Drawing.Point(900, 6);
-            this.listBox10.Name = "listBox10";
-            this.listBox10.Size = new System.Drawing.Size(106, 277);
-            this.listBox10.TabIndex = 13;
+            this.listBox14.FormattingEnabled = true;
+            this.listBox14.Location = new System.Drawing.Point(123, 31);
+            this.listBox14.Name = "listBox14";
+            this.listBox14.Size = new System.Drawing.Size(111, 277);
+            this.listBox14.TabIndex = 1;
             // 
-            // listBox11
+            // listBox13
             // 
-            this.listBox11.FormattingEnabled = true;
-            this.listBox11.Location = new System.Drawing.Point(1012, 6);
-            this.listBox11.Name = "listBox11";
-            this.listBox11.Size = new System.Drawing.Size(85, 277);
-            this.listBox11.TabIndex = 14;
+            this.listBox13.FormattingEnabled = true;
+            this.listBox13.Location = new System.Drawing.Point(6, 31);
+            this.listBox13.Name = "listBox13";
+            this.listBox13.Size = new System.Drawing.Size(111, 277);
+            this.listBox13.TabIndex = 0;
             // 
-            // listBox12
+            // label14
             // 
-            this.listBox12.FormattingEnabled = true;
-            this.listBox12.Location = new System.Drawing.Point(1103, 6);
-            this.listBox12.Name = "listBox12";
-            this.listBox12.Size = new System.Drawing.Size(85, 277);
-            this.listBox12.TabIndex = 15;
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(129, 15);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(16, 13);
+            this.label14.TabIndex = 6;
+            this.label14.Text = "М";
             // 
-            // label1
+            // label15
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 290);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 13);
-            this.label1.TabIndex = 16;
-            this.label1.Text = "Ф-ия отклика(М)";
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(247, 15);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(45, 13);
+            this.label15.TabIndex = 7;
+            this.label15.Text = "М(верх)";
             // 
-            // label2
+            // label16
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(107, 290);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 13);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "Ф-ия отклика(А)";
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(364, 15);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(20, 13);
+            this.label16.TabIndex = 8;
+            this.label16.Text = "2Е";
             // 
-            // label3
+            // label17
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(200, 290);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 13);
-            this.label3.TabIndex = 18;
-            this.label3.Text = "Прогноз (М)";
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(483, 15);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(13, 13);
+            this.label17.TabIndex = 9;
+            this.label17.Text = "L";
             // 
-            // label4
+            // listBox18
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(294, 290);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(66, 13);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "Прогноз (А)";
+            this.listBox18.FormattingEnabled = true;
+            this.listBox18.Location = new System.Drawing.Point(592, 31);
+            this.listBox18.Name = "listBox18";
+            this.listBox18.Size = new System.Drawing.Size(112, 277);
+            this.listBox18.TabIndex = 10;
             // 
-            // label5
+            // label18
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(385, 290);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(106, 13);
-            this.label5.TabIndex = 20;
-            this.label5.Text = "Нижняя граница(М)";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(497, 290);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(104, 13);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "Нижняя граница(А)";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(607, 290);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(68, 13);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Прогноз (М)";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(695, 290);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(66, 13);
-            this.label8.TabIndex = 23;
-            this.label8.Text = "Прогноз (А)";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(786, 290);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(108, 13);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "Верхняя граница(М)";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(900, 290);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(106, 13);
-            this.label10.TabIndex = 25;
-            this.label10.Text = "Верхняя граница(А)";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(1009, 290);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(68, 13);
-            this.label11.TabIndex = 26;
-            this.label11.Text = "Прогноз (М)";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(1100, 290);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(66, 13);
-            this.label12.TabIndex = 27;
-            this.label12.Text = "Прогноз (А)";
-            // 
-            // forecastTopLineValues
-            // 
-            this.forecastTopLineValues.AutoSize = true;
-            this.forecastTopLineValues.Location = new System.Drawing.Point(649, 279);
-            this.forecastTopLineValues.Name = "forecastTopLineValues";
-            this.forecastTopLineValues.Size = new System.Drawing.Size(227, 17);
-            this.forecastTopLineValues.TabIndex = 16;
-            this.forecastTopLineValues.Text = "Прогнозное значение верхней границы";
-            this.forecastTopLineValues.UseVisualStyleBackColor = true;
-            this.forecastTopLineValues.CheckedChanged += new System.EventHandler(this.forecastTopLineValues_CheckedChanged);
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(598, 15);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(61, 13);
+            this.label18.TabIndex = 11;
+            this.label18.Text = "Состояние";
             // 
             // MainForm
             // 
@@ -514,16 +652,18 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.elevatorTable)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.functionDiagrams)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -531,7 +671,6 @@
 
         #endregion
         private System.Windows.Forms.DataGridView elevatorTable;
-        private System.Windows.Forms.PictureBox objectDiagramPicture;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
@@ -544,12 +683,7 @@
         private System.Windows.Forms.ListBox listBox4;
         private System.Windows.Forms.ListBox listBox3;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.CheckBox topLineSelectBox;
-        private System.Windows.Forms.CheckBox bottomLineSelectBox;
-        private System.Windows.Forms.CheckBox forecastResponseFunctionSelectBox;
-        private System.Windows.Forms.CheckBox showResponseFunctionSelectBox;
         private System.Windows.Forms.DataVisualization.Charting.Chart functionDiagrams;
-        private System.Windows.Forms.CheckBox forecastBottomLineValues;
         private System.Windows.Forms.ListBox listBox8;
         private System.Windows.Forms.ListBox listBox7;
         private System.Windows.Forms.ListBox listBox6;
@@ -571,6 +705,25 @@
         private System.Windows.Forms.ListBox listBox12;
         private System.Windows.Forms.ListBox listBox11;
         private System.Windows.Forms.CheckBox forecastTopLineValues;
+        private System.Windows.Forms.CheckBox forecastBottomLineValues;
+        private System.Windows.Forms.CheckBox topLineSelectBox;
+        private System.Windows.Forms.CheckBox bottomLineSelectBox;
+        private System.Windows.Forms.CheckBox forecastResponseFunctionSelectBox;
+        private System.Windows.Forms.CheckBox showResponseFunctionSelectBox;
+        private System.Windows.Forms.PictureBox objectDiagramPicture;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ListBox listBox17;
+        private System.Windows.Forms.ListBox listBox16;
+        private System.Windows.Forms.ListBox listBox15;
+        private System.Windows.Forms.ListBox listBox14;
+        private System.Windows.Forms.ListBox listBox13;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ListBox listBox18;
     }
 }
 

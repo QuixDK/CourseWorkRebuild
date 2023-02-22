@@ -107,6 +107,44 @@ namespace CourseWorkRebuild
             initTAndAValues();
             showMValues();
             showAValues();
+            String a = toolStripTextBox2.Text.Split(' ')[1];
+            listOfBottomLineMValues = calculations.calculateLineMValues(calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable));
+            listOfTopLineMValues = calculations.calculateLineMValues(calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable));
+            List<Double> forecastTopLineValue = calculations.getForecastMValue(listOfTopLineMValues, Convert.ToDouble(a));
+            List<Double> forecastBottomLineValue = calculations.getForecastMValue(listOfBottomLineMValues, Convert.ToDouble(a));
+            List<Double> forecastValue = calculations.getForecastMValue(listOfMValues, Convert.ToDouble(a));
+            foreach (Double value in listOfBottomLineMValues)
+            {
+                listBox13.Items.Add(value);
+            }
+            foreach (Double value in listOfTopLineMValues)
+            {
+                listBox15.Items.Add(value);
+            }
+            foreach (Double value in listOfMValues)
+            {
+                listBox14.Items.Add(value);
+            }
+            listBox13.Items.Add(forecastBottomLineValue.Last());
+            listBox14.Items.Add(forecastValue.Last());
+            listBox15.Items.Add(forecastTopLineValue.Last());
+            for (int i = 0; i < listBox13.Items.Count; i++)
+            {
+                listBox16.Items.Add(Math.Abs(Convert.ToDouble(listBox13.Items[i]) - Convert.ToDouble(listBox15.Items[i])));
+            }
+            for (int i = 0; i < listBox14.Items.Count; i++)
+            {
+                listBox17.Items.Add(Math.Abs(Convert.ToDouble(listBox14.Items[i]) - Convert.ToDouble(listBox14.Items[0])));
+            }
+            for (int i = 0; i < listBox17.Items.Count; i++)
+            {
+                if (Convert.ToDouble(listBox17.Items[i]) < (Convert.ToDouble(listBox16.Items[i])/2))
+                {
+                    listBox18.Items.Add("В пределе");
+                }
+                else listBox18.Items.Add("Выход за границу");
+
+            }
         }
 
         private void chartScale()
@@ -246,7 +284,6 @@ namespace CourseWorkRebuild
             responseFunctionDiagramRectangle = new Rectangle(functionDiagrams.Location.X, functionDiagrams.Location.Y, functionDiagrams.Width, functionDiagrams.Height);
             objectDiagramPictureRectangle = new Rectangle(objectDiagramPicture.Location.X, objectDiagramPicture.Location.Y, objectDiagramPicture.Width, objectDiagramPicture.Height);
         }
-
 
     }
 }
