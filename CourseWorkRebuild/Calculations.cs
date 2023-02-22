@@ -19,10 +19,11 @@ namespace CourseWorkRebuild
         public List<Double> calculateMValues(DataGridView elevatorTable)
         {
             Double M = 0;
+
             List<Double> values = new List<Double>();
+
             List<Double> listOfMValues = new List<Double> ();
-            List<Double> listOfAlphaValues = new List<Double>();
-            listOfAlphaValues.Add(0);
+
             for (int i = 0; i < elevatorTable.Rows.Count; i++)
             {
                 for (int j = 1; j < elevatorTable.ColumnCount; j++)
@@ -41,6 +42,63 @@ namespace CourseWorkRebuild
             return listOfMValues;
 
         }
+
+        public List<Double> calculateLineMValues(DataGridView elevatorTable)
+        {
+            Double M = 0;
+
+            List<Double> values = new List<Double>();
+
+            List<Double> listOfMValues = new List<Double>();
+
+            for (int i = 0; i < elevatorTable.Rows.Count-1; i++)
+            {
+                for (int j = 1; j < elevatorTable.ColumnCount; j++)
+                {
+                    values.Add(Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value));
+                }
+                foreach (double c in values)
+                {
+                    M += (c * c);
+                }
+                listOfMValues.Add(Math.Sqrt(M));
+                M = 0;
+                values.Clear();
+
+            }
+            return listOfMValues;
+
+        }
+        public List<Double> calculateLineAValues(DataGridView elevatorTable, List<Double> listOfMValues)
+        {
+            Double calculateAcos = 0;
+            Double calculateDegree = 0;
+            Double summPr = 0;
+            Double firstValue = 0;
+            Double secondValue = 0;
+            List<Double> listOfAlphaValues = new List<Double>();
+            listOfAlphaValues.Add(0);
+
+            for (int i = 0; i < elevatorTable.Rows.Count - 2; i++)
+            {
+                summPr = 0;
+                for (int j = 1; j < elevatorTable.ColumnCount; j++)
+                {
+                    firstValue = Convert.ToDouble(elevatorTable.Rows[0].Cells[j].Value);
+                    secondValue = Convert.ToDouble(elevatorTable.Rows[i + 1].Cells[j].Value);
+                    summPr += firstValue * secondValue;
+                }
+                summPr /= listOfMValues[0];
+                summPr /= listOfMValues[i + 1];
+                calculateAcos = Math.Acos(summPr);
+                calculateDegree = 180 * calculateAcos / Math.PI;
+                listOfAlphaValues.Add(calculateDegree);
+
+            }
+            return listOfAlphaValues;
+
+        }
+
 
         public List<Double> calculateAValues(DataGridView elevatorTable, List<Double> listOfMValues)
         {
@@ -72,8 +130,6 @@ namespace CourseWorkRebuild
 
         }
 
-
-
         public List<Double> getForecastMValue(List<Double> listOfMValues, Double a)
         {
             
@@ -93,7 +149,15 @@ namespace CourseWorkRebuild
                 m = a * listOfMValues[i] + (1- a) * forecastMValues[i-1];
                 forecastMValues.Add(m);
             }
-
+            m = 0;
+            summMValues = 0;
+            for (int i = 0; i < forecastMValues.Count; i++)
+            {
+                summMValues += forecastMValues[i];  
+            }
+            summMValues/= forecastMValues.Count;
+            m = a * summMValues + (1 - a) * forecastMValues.Last();
+            forecastMValues.Add(m);
             return forecastMValues;
         }
 
@@ -114,6 +178,15 @@ namespace CourseWorkRebuild
                 A = a * listOfAValues[i] + (1 - a) * forecastAValues[i - 1];
                 forecastAValues.Add(A);
             }
+            A = 0;
+            summAValues = 0;
+            for (int i = 0; i < forecastAValues.Count; i++)
+            {
+                summAValues += forecastAValues[i];
+            }
+            summAValues /= forecastAValues.Count;
+            A = a * forecastAValues.Average() + (1 - a) * forecastAValues.Last();
+            forecastAValues.Add(A);
 
             return forecastAValues;
         }
@@ -133,9 +206,9 @@ namespace CourseWorkRebuild
                 bottomLineTable.Rows.Add(dataTable.Rows[row].ItemArray);
             }
             String T = toolStripTextBox1.Text.Split(' ')[1];
-            for (int i = 0; i < elevatorTable.Rows.Count; i++)
+            for (int i = 0; i < bottomLineTable.Rows.Count-1; i++)
             {
-                for (int j = 1; j < elevatorTable.ColumnCount; j++)
+                for (int j = 1; j < bottomLineTable.ColumnCount; j++)
                 {
                     bottomLineTable.Rows[i].Cells[j].Value = Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value) - Convert.ToDouble(T);
                 }

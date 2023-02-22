@@ -1,6 +1,7 @@
 ﻿using CourseWorkRebuild;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -8,20 +9,26 @@ using System.Windows.Forms.DataVisualization.Charting;
 public class ChartDiagramService
 {
 	Calculations calculations = new Calculations();
-	public ChartDiagramService()
-	{
-		
-	}
-    public Chart addLine(List<Double> listOfTopLineMValues, List<Double> listOfTopLineAValues, DataGridView dTable, Chart functionDiagrams, String serieName)
-    {
 
-        listOfTopLineMValues = calculations.calculateMValues(dTable);
-        listOfTopLineAValues = calculations.calculateAValues(dTable, listOfTopLineMValues);
+    public Chart addLine(List<Double> listOfMValues, List<Double> listOfAValues, DataGridView dTable, Chart functionDiagrams, String serieName, ListBox listBox, ListBox listBox2)
+    {
+        listBox.Items.Clear();
+        listBox2.Items.Clear();
+        listOfMValues = calculations.calculateLineMValues(dTable);
+        listOfAValues = calculations.calculateLineAValues(dTable, listOfMValues);
+        foreach (Double value in listOfMValues)
+        {
+            listBox.Items.Add(value);
+        }
+        foreach (Double value in listOfAValues)
+        {
+            listBox2.Items.Add(value);
+        }
         functionDiagrams.Series.Add(serieName);
         functionDiagrams.Series[serieName].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-        for (int i = 0; i < listOfTopLineMValues.Count; i++)
+        for (int i = 0; i < listOfMValues.Count; i++)
         {
-            functionDiagrams.Series[serieName].Points.AddXY(listOfTopLineMValues[i], listOfTopLineAValues[i]);
+            functionDiagrams.Series[serieName].Points.AddXY(listOfMValues[i], listOfAValues[i]);
         }
         return functionDiagrams;
     }
@@ -51,7 +58,7 @@ public class ChartDiagramService
 
     }
 
-    public Chart addforecastResponseFunction(List<Double> listOfMValues, List<Double> listOfAlphaValues, Chart functionDiagrams, ToolStripTextBox toolStripTextBox2)
+    public Chart addforecastResponseFunction(List<Double> listOfMValues, List<Double> listOfAlphaValues, Chart functionDiagrams, ToolStripTextBox toolStripTextBox2, ListBox listBox, ListBox listBox2)
     {
         List<Double> forecastMValue = new List<Double>();
         List<Double> forecastAValue = new List<Double>();
@@ -60,10 +67,67 @@ public class ChartDiagramService
         forecastAValue = calculations.getForecastAValue(listOfAlphaValues, Convert.ToDouble(a));
 
         functionDiagrams.Series.Add("Прогнозное значение");
-        functionDiagrams.Series["Прогнозное значение"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-        for (int i = 0; i < forecastMValue.Count - 1; i++)
+        functionDiagrams.Series["Прогнозное значение"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+        functionDiagrams.Series["Прогнозное значение"].Points.AddXY(forecastMValue.Last(), forecastAValue.Last());
+        foreach (Double value in forecastMValue)
         {
-            functionDiagrams.Series["Прогнозное значение"].Points.AddXY(forecastMValue[i], forecastAValue[i]);
+            listBox.Items.Add(value);
+        }
+        foreach (Double value in forecastAValue)
+        {
+            listBox2.Items.Add(value);
+        }
+        return functionDiagrams;
+    }
+
+    public Chart addforecastBottomFunction(DataTable dataTable, ToolStripTextBox toolStripTextBox1, Chart functionDiagrams, ToolStripTextBox toolStripTextBox2, DataGridView elevatorTable, ListBox listBox, ListBox listBox2)
+    {
+        listBox.Items.Clear();
+        listBox2.Items.Clear();
+        List<Double> listOfBottomMValues = calculations.calculateLineMValues(calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable));
+        List<Double> listOfBottomAlphaValues = calculations.calculateLineAValues(calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable), listOfBottomMValues);
+        List<Double> forecastMValue = new List<Double>();
+        List<Double> forecastAValue = new List<Double>();
+        String a = toolStripTextBox2.Text.Split(' ')[1];
+        forecastMValue = calculations.getForecastMValue(listOfBottomMValues, Convert.ToDouble(a));
+        forecastAValue = calculations.getForecastAValue(listOfBottomAlphaValues, Convert.ToDouble(a));
+
+        functionDiagrams.Series.Add("Прогнозное значение для нижней границы");
+        functionDiagrams.Series["Прогнозное значение для нижней границы"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+        functionDiagrams.Series["Прогнозное значение для нижней границы"].Points.AddXY(forecastMValue.Last(), forecastAValue.Last());
+        foreach (Double value in forecastMValue)
+        {
+            listBox.Items.Add(value);
+        }
+        foreach (Double value in forecastAValue)
+        {
+            listBox2.Items.Add(value);
+        }
+        return functionDiagrams;
+    }
+
+    public Chart addforecastTopFunction(DataTable dataTable, ToolStripTextBox toolStripTextBox1, Chart functionDiagrams, ToolStripTextBox toolStripTextBox2, DataGridView elevatorTable, ListBox listBox, ListBox listBox2)
+    {
+        listBox.Items.Clear();
+        listBox2.Items.Clear();
+        List<Double> listOfBottomMValues = calculations.calculateLineMValues(calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable));
+        List<Double> listOfBottomAlphaValues = calculations.calculateLineAValues(calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable), listOfBottomMValues);
+        List<Double> forecastMValue = new List<Double>();
+        List<Double> forecastAValue = new List<Double>();
+        String a = toolStripTextBox2.Text.Split(' ')[1];
+        forecastMValue = calculations.getForecastMValue(listOfBottomMValues, Convert.ToDouble(a));
+        forecastAValue = calculations.getForecastAValue(listOfBottomAlphaValues, Convert.ToDouble(a));
+
+        functionDiagrams.Series.Add("Прогнозное значение для верхней границы");
+        functionDiagrams.Series["Прогнозное значение для верхней границы"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+        functionDiagrams.Series["Прогнозное значение для верхней границы"].Points.AddXY(forecastMValue.Last(), forecastAValue.Last());
+        foreach (Double value in forecastMValue)
+        {
+            listBox.Items.Add(value);
+        }
+        foreach (Double value in forecastAValue)
+        {
+            listBox2.Items.Add(value);
         }
         return functionDiagrams;
     }

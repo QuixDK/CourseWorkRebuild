@@ -35,17 +35,10 @@ namespace CourseWorkRebuild
         private bool isContinue = false;
         private List<Double> listOfMValues;
         private List<Double> listOfAlphaValues;
-        private List<Double> listOfBottomLineMValues;
-        private List<Double> listOfBottomLineAValues;
-        private List<Double> listOfTopLineMValues;
-        private List<Double> listOfTopLineAValues;
-        private List<Double> listOfBottomLineForecastMValues;
-        private List<Double> listOfBottomLineForecastAValues;
-        private bool responseFunctionIsShow = false;
-        private bool forecastResponseFunctionIsShow = false;
-        private bool bottomLineIsShow = false;
-        private bool topLineIsShow = false;
-        private bool bottomLineForecastIsShow = false;
+        private List<Double> listOfBottomLineMValues = new List<Double>();
+        private List<Double> listOfBottomLineAValues = new List<Double>();
+        private List<Double> listOfTopLineMValues = new List<Double>();
+        private List<Double> listOfTopLineAValues = new List<Double>();
         ChartDiagramService chartDiagramService = new ChartDiagramService();
         Repository db;
         Calculations calculations;
@@ -96,7 +89,7 @@ namespace CourseWorkRebuild
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show("Не выбран ни один проект");
                 Close();
             }
 
@@ -117,7 +110,7 @@ namespace CourseWorkRebuild
         }
 
         private void chartScale()
-        {
+        { 
             functionDiagrams.ChartAreas[0].AxisX.Maximum = Math.Max(Math.Max(listOfBottomLineMValues.Max(),listOfMValues.Max()),listOfTopLineMValues.Max());
             functionDiagrams.ChartAreas[0].AxisX.Minimum = Math.Min(Math.Min(listOfMValues.Min(), listOfTopLineMValues.Min()),listOfBottomLineMValues.Min());
             functionDiagrams.ChartAreas[0].AxisY.Maximum = Math.Max(Math.Max(listOfBottomLineMValues.Max(), listOfMValues.Max()), listOfTopLineMValues.Max());
@@ -170,72 +163,41 @@ namespace CourseWorkRebuild
         private void topLineSelectBox_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Верхняя граница";
-            if (topLineIsShow == false)
-            {
-                chartDiagramService.addLine(listOfTopLineMValues, listOfTopLineAValues, calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams, serieName);
-                topLineIsShow = true;
-                //chartScale();
-            }
-            else
-            {
-                chartDiagramService.removeLine(functionDiagrams, serieName);
-                topLineIsShow = false;
-                //chartScale();
-            }
-
+            if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
+            else chartDiagramService.addLine(listOfTopLineMValues, listOfTopLineAValues, calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams, serieName, listBox9, listBox10);
         }
 
         private void bottomLineSelectBox_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Нижняя граница";
-            if (bottomLineIsShow == false)
-            {
-                chartDiagramService.addLine(listOfBottomLineMValues, listOfBottomLineAValues, calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams, serieName);
-                bottomLineIsShow = true;
-                //chartScale();
-            }
-            else
-            {
-                chartDiagramService.removeLine(functionDiagrams, serieName);
-                bottomLineIsShow = false;
-                //chartScale();
-            }
-
+            if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
+            else chartDiagramService.addLine(listOfBottomLineMValues, listOfBottomLineAValues, calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams, serieName, listBox5, listBox6);
         }
 
         private void showResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Функция отклика";
-            if (responseFunctionIsShow == false)
-            {
-                chartDiagramService.addResponseFunction(listOfMValues, listOfAlphaValues, elevatorTable, functionDiagrams);
-                responseFunctionIsShow = true;
-                //chartScale();
-            } 
-            else
-            {
-                chartDiagramService.removeLine(functionDiagrams, serieName);
-                responseFunctionIsShow = false;
-                //chartScale();
-            }
-
+            if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
+            else chartDiagramService.addResponseFunction(listOfMValues, listOfAlphaValues, elevatorTable, functionDiagrams);
         }
 
         private void forecastResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Прогнозное значение";
-            if (forecastResponseFunctionIsShow == false)
-            {
-                chartDiagramService.addforecastResponseFunction(listOfMValues, listOfAlphaValues, functionDiagrams, toolStripTextBox2);
-                forecastResponseFunctionIsShow = true;
-                //chartScale();
-            }
-            else
-            {
-                chartDiagramService.removeLine(functionDiagrams, serieName);
-                forecastResponseFunctionIsShow = false;
-                //chartScale();
-            }
+            if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
+            else chartDiagramService.addforecastResponseFunction(listOfMValues, listOfAlphaValues, functionDiagrams, toolStripTextBox2, listBox3, listBox4);
+        }
+        private void forecastBottomValues_CheckedChanged(object sender, EventArgs e)
+        {
+            String serieName = "Прогнозное значение для нижней границы";
+            if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
+            else chartDiagramService.addforecastBottomFunction(dataTable, toolStripTextBox1, functionDiagrams, toolStripTextBox2, elevatorTable, listBox7, listBox8);
+        }
+        private void forecastTopLineValues_CheckedChanged(object sender, EventArgs e)
+        {
+            String serieName = "Прогнозное значение для верхней границы";
+            if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
+            else chartDiagramService.addforecastTopFunction(dataTable, toolStripTextBox1, functionDiagrams, toolStripTextBox2, elevatorTable, listBox11, listBox12);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
