@@ -53,7 +53,7 @@ namespace CourseWorkRebuild
             return tableName;
         }
 
-        public DataGridView showTable(String SQLQuery, DataTable dataTable, Repository db, DataGridView elevatorTable)
+        public DataGridView showTable(String SQLQuery, DataTable dataTable, DataGridView elevatorTable)
         {
 
             dataTable.Rows.Clear();
@@ -64,7 +64,7 @@ namespace CourseWorkRebuild
 
             for (int i = 1; i < dataTable.Columns.Count; i++)
             {
-                String replaceCommosToDots = "UPDATE [" + db.getTableNames() + "] SET[" + i + "] = REPLACE([" + i + "],',','.')";
+                String replaceCommosToDots = "UPDATE [" + getTableNames() + "] SET[" + i + "] = REPLACE([" + i + "],',','.')";
                 command.CommandText = replaceCommosToDots;
                 command.ExecuteNonQuery();
                 Thread.Sleep(10);

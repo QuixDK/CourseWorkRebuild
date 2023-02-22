@@ -45,18 +45,19 @@
             this.bottomLineSelectBox = new System.Windows.Forms.CheckBox();
             this.forecastResponseFunctionSelectBox = new System.Windows.Forms.CheckBox();
             this.showResponseFunctionSelectBox = new System.Windows.Forms.CheckBox();
-            this.functionDiagrams = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listBox4 = new System.Windows.Forms.ListBox();
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.functionDiagrams = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.elevatorTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDiagramPicture)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.functionDiagrams)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.functionDiagrams)).BeginInit();
             this.SuspendLayout();
             // 
             // elevatorTable
@@ -151,7 +152,6 @@
             this.tabPage1.Controls.Add(this.showResponseFunctionSelectBox);
             this.tabPage1.Controls.Add(this.objectDiagramPicture);
             this.tabPage1.Controls.Add(this.elevatorTable);
-            this.tabPage1.Controls.Add(this.functionDiagrams);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -204,21 +204,6 @@
             this.showResponseFunctionSelectBox.UseVisualStyleBackColor = true;
             this.showResponseFunctionSelectBox.CheckedChanged += new System.EventHandler(this.showResponseFunctionSelectBox_CheckedChanged);
             // 
-            // functionDiagrams
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.functionDiagrams.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.functionDiagrams.Legends.Add(legend1);
-            this.functionDiagrams.Location = new System.Drawing.Point(3, 3);
-            this.functionDiagrams.Name = "functionDiagrams";
-            this.functionDiagrams.Size = new System.Drawing.Size(640, 303);
-            this.functionDiagrams.TabIndex = 15;
-            this.functionDiagrams.Text = "chart1";
-            title1.Name = "Функция Отклика";
-            title1.Text = "График";
-            this.functionDiagrams.Titles.Add(title1);
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.listBox4);
@@ -251,6 +236,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.functionDiagrams);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -258,6 +244,21 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // functionDiagrams
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.functionDiagrams.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.functionDiagrams.Legends.Add(legend1);
+            this.functionDiagrams.Location = new System.Drawing.Point(3, 6);
+            this.functionDiagrams.Name = "functionDiagrams";
+            this.functionDiagrams.Size = new System.Drawing.Size(1218, 551);
+            this.functionDiagrams.TabIndex = 16;
+            this.functionDiagrams.Text = "chart1";
+            title1.Name = "Функция Отклика";
+            title1.Text = "График";
+            this.functionDiagrams.Titles.Add(title1);
             // 
             // MainForm
             // 
@@ -281,8 +282,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.functionDiagrams)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.functionDiagrams)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

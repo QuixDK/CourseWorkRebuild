@@ -39,10 +39,13 @@ namespace CourseWorkRebuild
         private List<Double> listOfBottomLineAValues;
         private List<Double> listOfTopLineMValues;
         private List<Double> listOfTopLineAValues;
+        private List<Double> listOfBottomLineForecastMValues;
+        private List<Double> listOfBottomLineForecastAValues;
         private bool responseFunctionIsShow = false;
         private bool forecastResponseFunctionIsShow = false;
         private bool bottomLineIsShow = false;
         private bool topLineIsShow = false;
+        private bool bottomLineForecastIsShow = false;
         ChartDiagramService chartDiagramService = new ChartDiagramService();
         Repository db;
         Calculations calculations;
@@ -64,8 +67,6 @@ namespace CourseWorkRebuild
         private void MainForm_Load(object sender, EventArgs e)
         {
             initRectangleSettings();
-            
-
 
             try
             {
@@ -109,10 +110,18 @@ namespace CourseWorkRebuild
             sqlConnection = db.getDbConnection();
             
             loadObjectDiagram();
-            db.showTable(SQL_AllTable(), dataTable, db, elevatorTable);
+            db.showTable(SQL_AllTable(), dataTable, elevatorTable);
             initTAndAValues();
             showMValues();
             showAValues();
+        }
+
+        private void chartScale()
+        {
+            functionDiagrams.ChartAreas[0].AxisX.Maximum = Math.Max(Math.Max(listOfBottomLineMValues.Max(),listOfMValues.Max()),listOfTopLineMValues.Max());
+            functionDiagrams.ChartAreas[0].AxisX.Minimum = Math.Min(Math.Min(listOfMValues.Min(), listOfTopLineMValues.Min()),listOfBottomLineMValues.Min());
+            functionDiagrams.ChartAreas[0].AxisY.Maximum = Math.Max(Math.Max(listOfBottomLineMValues.Max(), listOfMValues.Max()), listOfTopLineMValues.Max());
+            functionDiagrams.ChartAreas[0].AxisY.Minimum = Math.Min(Math.Min(listOfMValues.Min(), listOfTopLineMValues.Min()), listOfBottomLineMValues.Min());
         }
 
         private void loadObjectDiagram()
@@ -149,6 +158,7 @@ namespace CourseWorkRebuild
         private String SQL_AllTable()
         {
             return "SELECT * FROM [" + db.getTableNames() + "]";
+            
         }
 
         private void saveChangesButton_Click(object sender, EventArgs e)
@@ -159,62 +169,72 @@ namespace CourseWorkRebuild
 
         private void topLineSelectBox_CheckedChanged(object sender, EventArgs e)
         {
-
+            String serieName = "Верхняя граница";
             if (topLineIsShow == false)
             {
-                chartDiagramService.addTopLine(listOfTopLineMValues, listOfTopLineAValues, calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams);
+                chartDiagramService.addLine(listOfTopLineMValues, listOfTopLineAValues, calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams, serieName);
                 topLineIsShow = true;
+                //chartScale();
             }
             else
             {
-                chartDiagramService.removeTopLine(functionDiagrams);
+                chartDiagramService.removeLine(functionDiagrams, serieName);
                 topLineIsShow = false;
+                //chartScale();
             }
 
         }
 
         private void bottomLineSelectBox_CheckedChanged(object sender, EventArgs e)
         {
-
+            String serieName = "Нижняя граница";
             if (bottomLineIsShow == false)
             {
-                chartDiagramService.addBottomLine(listOfBottomLineMValues, listOfBottomLineAValues, calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams);
+                chartDiagramService.addLine(listOfBottomLineMValues, listOfBottomLineAValues, calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams, serieName);
                 bottomLineIsShow = true;
+                //chartScale();
             }
             else
             {
-                chartDiagramService.removeBottomLine(functionDiagrams);
+                chartDiagramService.removeLine(functionDiagrams, serieName);
                 bottomLineIsShow = false;
+                //chartScale();
             }
 
         }
 
         private void showResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
         {
-
+            String serieName = "Функция отклика";
             if (responseFunctionIsShow == false)
             {
                 chartDiagramService.addResponseFunction(listOfMValues, listOfAlphaValues, elevatorTable, functionDiagrams);
                 responseFunctionIsShow = true;
+                //chartScale();
             } 
             else
             {
-                chartDiagramService.removeResponseFunction(functionDiagrams);
+                chartDiagramService.removeLine(functionDiagrams, serieName);
                 responseFunctionIsShow = false;
+                //chartScale();
             }
 
         }
+
         private void forecastResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
         {
+            String serieName = "Прогнозное значение";
             if (forecastResponseFunctionIsShow == false)
             {
                 chartDiagramService.addforecastResponseFunction(listOfMValues, listOfAlphaValues, functionDiagrams, toolStripTextBox2);
                 forecastResponseFunctionIsShow = true;
+                //chartScale();
             }
             else
             {
-                chartDiagramService.removeforecastResponseFunction(functionDiagrams);
+                chartDiagramService.removeLine(functionDiagrams, serieName);
                 forecastResponseFunctionIsShow = false;
+                //chartScale();
             }
         }
 
@@ -264,6 +284,7 @@ namespace CourseWorkRebuild
             responseFunctionDiagramRectangle = new Rectangle(functionDiagrams.Location.X, functionDiagrams.Location.Y, functionDiagrams.Width, functionDiagrams.Height);
             objectDiagramPictureRectangle = new Rectangle(objectDiagramPicture.Location.X, objectDiagramPicture.Location.Y, objectDiagramPicture.Width, objectDiagramPicture.Height);
         }
+
 
     }
 }
