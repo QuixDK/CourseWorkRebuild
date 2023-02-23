@@ -13,6 +13,8 @@ namespace CourseWorkRebuild
         private String valueOfT = "";
         private String valueOfa = "";
         private String pathToElevatorAndValuesTableRoot = "";
+        private String markCount = "";
+        private String buildingCount = "";
 
         public InitProject(String pathToElevatorTableRoot, String pathToObjectDiagramRoot, String valueOfT, String valueOfA)
         {
@@ -22,16 +24,27 @@ namespace CourseWorkRebuild
             this.valueOfa = valueOfA;
         }
 
-        public InitProject(String pathToElevatorAndValuesTableRoot, String pathToObjectDiagramRoot, String valueOfT)
+        public InitProject(String pathToElevatorAndValuesTableRoot, String pathToObjectDiagramRoot, String valueOfT, String valueOfA, String markCount, String buildingCount)
         {
             this.pathToElevatorAndValuesTableRoot = pathToElevatorAndValuesTableRoot;
             this.pathToObjectDiagramRoot = pathToObjectDiagramRoot;
             this.valueOfT = valueOfT;
+            this.valueOfa= valueOfA;
+            this.markCount = markCount;
+            this.buildingCount = buildingCount;
         }
 
         public String getPathToElevatorTableRoot()
         {
             return this.pathToElevatorTableRoot;
+        }
+        public String getMarkCount()
+        {
+            return this.markCount;
+        }
+        public String getBuildingCount()
+        {
+            return this.buildingCount;
         }
 
         public String getPathToObjectDiagramRoot()

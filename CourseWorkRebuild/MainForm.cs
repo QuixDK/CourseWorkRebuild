@@ -101,7 +101,7 @@ namespace CourseWorkRebuild
 
             catch (Exception ex)
             {
-                MessageBox.Show("Не выбран ни один проект");
+                MessageBox.Show(ex.Message.ToString());
                 Close();
             }
 
@@ -172,6 +172,11 @@ namespace CourseWorkRebuild
                 }
                 else listBox18.Items.Add("Выход за границу");
             }
+        }
+
+        private void secondLevel()
+        {
+
         }
 
         private void loadObjectDiagram()

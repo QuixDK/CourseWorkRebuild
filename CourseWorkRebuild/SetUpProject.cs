@@ -21,6 +21,8 @@ namespace CourseWorkRebuild
         private InitProject initProject;
         public SetFieldsForNewProject initInfoForCreateDB;
         private String valueOfT;
+        private String buildingCount;
+        private String markCount;
         public SetUpProject(SetFieldsForNewProject initInfoForCreateProject)
         {
             InitializeComponent();
@@ -86,8 +88,26 @@ namespace CourseWorkRebuild
                         
                     }
                 }
+                foreach (String valueLine in valueLines)
+                {
+                    if (valueLine.StartsWith("Количество структурных блоков"))
+                    {
+                        List<String> line = valueLine.Split(' ').ToList();
+                        buildingCount = line[1];
 
-                this.initProject = new InitProject(elevatorAndValuesTablePath, objectDiagramPath, valueOfT, "0,9");
+                    }
+                }
+                foreach (String valueLine in valueLines)
+                {
+                    if (valueLine.StartsWith("Количество геодезических марок, закрепленных в теле объекта"))
+                    {
+                        List<String> line = valueLine.Split(' ').ToList();
+                        valueOfT = line[1];
+
+                    }
+                }
+
+                this.initProject = new InitProject(elevatorAndValuesTablePath, objectDiagramPath, valueOfT, "0,9", markCount, buildingCount);
 
                 Close();
 
