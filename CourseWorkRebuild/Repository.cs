@@ -53,9 +53,9 @@ namespace CourseWorkRebuild
             return tableName;
         }
 
-        public DataGridView showTable(String SQLQuery, DataTable dataTable, DataGridView elevatorTable)
+        public DataGridView showTable(DataTable dataTable, DataGridView elevatorTable)
         {
-
+            String SQLQuery = "SELECT * FROM [" + getTableNames() + "]";
             dataTable.Rows.Clear();
             dataTable.Columns.Clear();
             SQLiteCommand command = new SQLiteCommand(sqlConnection);

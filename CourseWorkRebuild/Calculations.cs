@@ -130,115 +130,78 @@ namespace CourseWorkRebuild
 
         }
 
-        public List<Double> getForecastMValue(List<Double> listOfMValues, Double a)
+        public List<Double> getForecastValue(List<Double> listOfValues, Double a)
         {
+            List<Double> forecastValues = new List<Double>();
+            Double summValues = 0;
+            for (int i = 0; i < listOfValues.Count; i++)
+            {
+                summValues += listOfValues[i];
+            }
+            summValues /= listOfValues.Count;
+            Double value = a * listOfValues[0] + (1 - a) * summValues;
+            forecastValues.Add(value);
+            for (int i = 1; i < listOfValues.Count; i++)
+            {
+                value = 0;
+                value = a * listOfValues[i] + (1 - a) * forecastValues[i - 1];
+                forecastValues.Add(value);
+            }
+            value = 0;
+            summValues = 0;
+            for (int i = 0; i < forecastValues.Count; i++)
+            {
+                summValues += forecastValues[i];
+            }
+            summValues /= forecastValues.Count;
+            value = a * forecastValues.Average() + (1 - a) * forecastValues.Last();
+            forecastValues.Add(value);
+
+            return forecastValues;
+        }
+
+        public DataGridView calculateBottomLine(DataTable dataTable, Double T, DataGridView elevatorTable)
+        {
+            DataGridView bottomLineTable = calculateNewTable(dataTable);
             
-            List<Double> forecastMValues = new List<Double>();
-            Double summMValues = 0;
-            for (int i = 0; i < listOfMValues.Count; i++)
-            {
-                summMValues += listOfMValues[i];
-            }
-            summMValues /= listOfMValues.Count;
-            Double m = a * listOfMValues[0] + (1 - a) * summMValues;
-            forecastMValues.Add(m);
-
-            for (int i = 1; i < listOfMValues.Count; i++)
-            {
-                m = 0;
-                m = a * listOfMValues[i] + (1- a) * forecastMValues[i-1];
-                forecastMValues.Add(m);
-            }
-            m = 0;
-            summMValues = 0;
-            for (int i = 0; i < forecastMValues.Count; i++)
-            {
-                summMValues += forecastMValues[i];  
-            }
-            summMValues/= forecastMValues.Count;
-            m = a * summMValues + (1 - a) * forecastMValues.Last();
-            forecastMValues.Add(m);
-            return forecastMValues;
-        }
-
-        public List<Double> getForecastAValue(List<Double> listOfAValues, Double a)
-        {
-            List<Double> forecastAValues = new List<Double>();
-            Double summAValues = 0;
-            for (int i = 0; i < listOfAValues.Count; i++)
-            {
-                summAValues += listOfAValues[i];
-            }
-            summAValues /= listOfAValues.Count;
-            Double A = a * listOfAValues[0] + (1 - a) * summAValues;
-            forecastAValues.Add(A);
-            for (int i = 1; i < listOfAValues.Count; i++)
-            {
-                A = 0;
-                A = a * listOfAValues[i] + (1 - a) * forecastAValues[i - 1];
-                forecastAValues.Add(A);
-            }
-            A = 0;
-            summAValues = 0;
-            for (int i = 0; i < forecastAValues.Count; i++)
-            {
-                summAValues += forecastAValues[i];
-            }
-            summAValues /= forecastAValues.Count;
-            A = a * forecastAValues.Average() + (1 - a) * forecastAValues.Last();
-            forecastAValues.Add(A);
-
-            return forecastAValues;
-        }
-
-        public DataGridView calculateBottomLine(DataTable dataTable, ToolStripTextBox toolStripTextBox1, DataGridView elevatorTable)
-        {
-            DataGridView bottomLineTable = new DataGridView();
-            for (int column = 0; column < dataTable.Columns.Count; column++)
-            {
-                String ColName = dataTable.Columns[column].ColumnName;
-                bottomLineTable.Columns.Add(ColName, ColName);
-                bottomLineTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            }
-
-            for (int row = 0; row < dataTable.Rows.Count; row++)
-            {
-                bottomLineTable.Rows.Add(dataTable.Rows[row].ItemArray);
-            }
-            String T = toolStripTextBox1.Text.Split(' ')[1];
-            for (int i = 0; i < bottomLineTable.Rows.Count-1; i++)
-            {
-                for (int j = 1; j < bottomLineTable.ColumnCount; j++)
-                {
-                    bottomLineTable.Rows[i].Cells[j].Value = Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value) - Convert.ToDouble(T);
-                }
-            }
-            return bottomLineTable;
-        }
-        public DataGridView calculateTopLine(DataTable dataTable, ToolStripTextBox toolStripTextBox1, DataGridView elevatorTable)
-        {
-            DataGridView bottomLineTable = new DataGridView();
-            for (int column = 0; column < dataTable.Columns.Count; column++)
-            {
-                String ColName = dataTable.Columns[column].ColumnName;
-                bottomLineTable.Columns.Add(ColName, ColName);
-                bottomLineTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            }
-
-            for (int row = 0; row < dataTable.Rows.Count; row++)
-            {
-                bottomLineTable.Rows.Add(dataTable.Rows[row].ItemArray);
-            }
-            String T = toolStripTextBox1.Text.Split(' ')[1];
             for (int i = 0; i < elevatorTable.Rows.Count; i++)
             {
                 for (int j = 1; j < elevatorTable.ColumnCount; j++)
                 {
-                    bottomLineTable.Rows[i].Cells[j].Value = Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value) + Convert.ToDouble(T);
+                    bottomLineTable.Rows[i].Cells[j].Value = Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value) - T;
                 }
             }
             return bottomLineTable;
+        }
+        public DataGridView calculateTopLine(DataTable dataTable, Double T, DataGridView elevatorTable)
+        {
+            DataGridView topLineTable = calculateNewTable(dataTable);
+            
+            for (int i = 0; i < elevatorTable.Rows.Count; i++)
+            {
+                for (int j = 1; j < elevatorTable.ColumnCount; j++)
+                {
+                    topLineTable.Rows[i].Cells[j].Value = Convert.ToDouble(elevatorTable.Rows[i].Cells[j].Value) + T;
+                }
+            }
+            return topLineTable;
+        }
+
+        private DataGridView calculateNewTable(DataTable dataTable)
+        {
+            DataGridView newTable = new DataGridView();
+            for (int column = 0; column < dataTable.Columns.Count; column++)
+            {
+                String ColName = dataTable.Columns[column].ColumnName;
+                newTable.Columns.Add(ColName, ColName);
+                newTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
+
+            for (int row = 0; row < dataTable.Rows.Count; row++)
+            {
+                newTable.Rows.Add(dataTable.Rows[row].ItemArray);
+            }
+            return newTable;
         }
 
 
