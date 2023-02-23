@@ -85,6 +85,9 @@
             this.label17 = new System.Windows.Forms.Label();
             this.listBox18 = new System.Windows.Forms.ListBox();
             this.label18 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.elevatorTable)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -106,7 +109,7 @@
             this.elevatorTable.Location = new System.Drawing.Point(3, 312);
             this.elevatorTable.Name = "elevatorTable";
             this.elevatorTable.RowHeadersWidth = 51;
-            this.elevatorTable.Size = new System.Drawing.Size(1221, 241);
+            this.elevatorTable.Size = new System.Drawing.Size(1221, 252);
             this.elevatorTable.TabIndex = 1;
             // 
             // menuStrip1
@@ -166,6 +169,9 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
+            this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Location = new System.Drawing.Point(0, 30);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -181,7 +187,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1229, 567);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Таблица высот";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // objectDiagramPicture
@@ -223,7 +229,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(1229, 567);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Данные рассчетов";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // label12
@@ -428,13 +434,13 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(1229, 567);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.Text = "График";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // forecastTopLineValues
             // 
             this.forecastTopLineValues.AutoSize = true;
-            this.forecastTopLineValues.Location = new System.Drawing.Point(993, 535);
+            this.forecastTopLineValues.Location = new System.Drawing.Point(1077, 535);
             this.forecastTopLineValues.Name = "forecastTopLineValues";
             this.forecastTopLineValues.Size = new System.Drawing.Size(227, 17);
             this.forecastTopLineValues.TabIndex = 22;
@@ -445,7 +451,7 @@
             // forecastBottomLineValues
             // 
             this.forecastBottomLineValues.AutoSize = true;
-            this.forecastBottomLineValues.Location = new System.Drawing.Point(993, 489);
+            this.forecastBottomLineValues.Location = new System.Drawing.Point(1077, 489);
             this.forecastBottomLineValues.Name = "forecastBottomLineValues";
             this.forecastBottomLineValues.Size = new System.Drawing.Size(224, 17);
             this.forecastBottomLineValues.TabIndex = 21;
@@ -456,7 +462,7 @@
             // topLineSelectBox
             // 
             this.topLineSelectBox.AutoSize = true;
-            this.topLineSelectBox.Location = new System.Drawing.Point(993, 512);
+            this.topLineSelectBox.Location = new System.Drawing.Point(1077, 512);
             this.topLineSelectBox.Name = "topLineSelectBox";
             this.topLineSelectBox.Size = new System.Drawing.Size(112, 17);
             this.topLineSelectBox.TabIndex = 20;
@@ -467,7 +473,7 @@
             // bottomLineSelectBox
             // 
             this.bottomLineSelectBox.AutoSize = true;
-            this.bottomLineSelectBox.Location = new System.Drawing.Point(993, 466);
+            this.bottomLineSelectBox.Location = new System.Drawing.Point(1077, 466);
             this.bottomLineSelectBox.Name = "bottomLineSelectBox";
             this.bottomLineSelectBox.Size = new System.Drawing.Size(110, 17);
             this.bottomLineSelectBox.TabIndex = 19;
@@ -478,7 +484,7 @@
             // forecastResponseFunctionSelectBox
             // 
             this.forecastResponseFunctionSelectBox.AutoSize = true;
-            this.forecastResponseFunctionSelectBox.Location = new System.Drawing.Point(993, 443);
+            this.forecastResponseFunctionSelectBox.Location = new System.Drawing.Point(1077, 443);
             this.forecastResponseFunctionSelectBox.Name = "forecastResponseFunctionSelectBox";
             this.forecastResponseFunctionSelectBox.Size = new System.Drawing.Size(137, 17);
             this.forecastResponseFunctionSelectBox.TabIndex = 18;
@@ -489,7 +495,7 @@
             // showResponseFunctionSelectBox
             // 
             this.showResponseFunctionSelectBox.AutoSize = true;
-            this.showResponseFunctionSelectBox.Location = new System.Drawing.Point(993, 420);
+            this.showResponseFunctionSelectBox.Location = new System.Drawing.Point(1077, 420);
             this.showResponseFunctionSelectBox.Name = "showResponseFunctionSelectBox";
             this.showResponseFunctionSelectBox.Size = new System.Drawing.Size(116, 17);
             this.showResponseFunctionSelectBox.TabIndex = 17;
@@ -636,6 +642,36 @@
             this.label18.TabIndex = 11;
             this.label18.Text = "Состояние";
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(1229, 567);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Уровень 2";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1229, 567);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Уровень 3";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(1229, 567);
+            this.tabPage7.TabIndex = 6;
+            this.tabPage7.Text = "Уровень 4";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -647,7 +683,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainForm";
+            this.Text = "Программа";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
@@ -724,6 +760,9 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ListBox listBox18;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage tabPage7;
     }
 }
 

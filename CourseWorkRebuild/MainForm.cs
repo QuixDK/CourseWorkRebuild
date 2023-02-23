@@ -21,6 +21,8 @@ namespace CourseWorkRebuild
         private Rectangle topLineSelectBoxRectangle;
         private Rectangle bottomLineSelectBoxRectangle;
         private Rectangle forecastResponseFunctionSelectBoxRectangle;
+        private Rectangle forecastBottomLineSelectBoxRectangle;
+        private Rectangle forecastTopLineSelectBoxRectangle;
         private Rectangle showResponseFunctionSelectBoxRectangle;
         private Rectangle originalFormSize;
         private Rectangle tabControl1Rectangle;
@@ -33,15 +35,25 @@ namespace CourseWorkRebuild
         private DataTable dataTable = new DataTable();
         private SetFieldsForNewProject setFieldsForNewProject;
         private bool isContinue = false;
-        private List<Double> listOfMValues;
-        private List<Double> listOfAlphaValues;
+        private List<Double> listOfMValues = new List<Double>();
+        private List<Double> listOfAValues = new List<Double>();
         private List<Double> listOfBottomLineMValues = new List<Double>();
         private List<Double> listOfBottomLineAValues = new List<Double>();
         private List<Double> listOfTopLineMValues = new List<Double>();
         private List<Double> listOfTopLineAValues = new List<Double>();
-        ChartDiagramService chartDiagramService = new ChartDiagramService();
-        Repository db;
-        Calculations calculations;
+        private List<Double> forecastTopLineMValue = new List<Double>();
+        private List<Double> forecastBottomLineMValue = new List<Double>();
+        private List<Double> forecastTopLineAValue = new List<Double>();
+        private List<Double> forecastBottomLineAValue = new List<Double>();
+        private List<Double> forecastMValue = new List<Double>();
+        private List<Double> forecastAValue = new List<Double>();
+        private ChartDiagramService chartDiagramService = new ChartDiagramService();
+        private Repository db;
+        private Calculations calculations;
+        private Double Alpha;
+        private Double T;
+        DataGridView bottomLineTable = new DataGridView();
+        DataGridView topLineTable = new DataGridView();
 
         public MainForm()
         {
@@ -104,15 +116,27 @@ namespace CourseWorkRebuild
             
             loadObjectDiagram();
             db.showTable(SQL_AllTable(), dataTable, elevatorTable);
-            initTAndAValues();
-            showMValues();
-            showAValues();
-            String a = toolStripTextBox2.Text.Split(' ')[1];
-            listOfBottomLineMValues = calculations.calculateLineMValues(calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable));
-            listOfTopLineMValues = calculations.calculateLineMValues(calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable));
-            List<Double> forecastTopLineValue = calculations.getForecastMValue(listOfTopLineMValues, Convert.ToDouble(a));
-            List<Double> forecastBottomLineValue = calculations.getForecastMValue(listOfBottomLineMValues, Convert.ToDouble(a));
-            List<Double> forecastValue = calculations.getForecastMValue(listOfMValues, Convert.ToDouble(a));
+            showTAndAValues();
+            firstLevel();
+        }
+
+        private void firstLevel()
+        {
+            bottomLineTable = calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable);
+            topLineTable = calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable);
+            listOfBottomLineMValues = calculations.calculateLineMValues(bottomLineTable);
+            listOfBottomLineAValues = calculations.calculateLineAValues(bottomLineTable, listOfBottomLineMValues);
+            listOfTopLineMValues = calculations.calculateLineMValues(topLineTable);
+            listOfTopLineAValues = calculations.calculateLineAValues(topLineTable, listOfTopLineMValues);
+            forecastTopLineMValue = calculations.getForecastMValue(listOfTopLineMValues, Alpha);
+            forecastBottomLineMValue = calculations.getForecastMValue(listOfBottomLineMValues, Alpha);
+            forecastTopLineAValue = calculations.getForecastAValue(listOfTopLineMValues, Alpha);
+            forecastBottomLineAValue = calculations.getForecastAValue(listOfBottomLineMValues, Alpha);
+            listOfMValues = calculations.calculateMValues(elevatorTable);
+            listOfAValues = calculations.calculateAValues(elevatorTable, listOfMValues);
+            forecastMValue = calculations.getForecastMValue(listOfMValues, Alpha);
+            forecastAValue = calculations.getForecastAValue(listOfAValues, Alpha);
+
             foreach (Double value in listOfBottomLineMValues)
             {
                 listBox13.Items.Add(value);
@@ -125,9 +149,9 @@ namespace CourseWorkRebuild
             {
                 listBox14.Items.Add(value);
             }
-            listBox13.Items.Add(forecastBottomLineValue.Last());
-            listBox14.Items.Add(forecastValue.Last());
-            listBox15.Items.Add(forecastTopLineValue.Last());
+            listBox13.Items.Add(forecastBottomLineMValue.Last());
+            listBox14.Items.Add(forecastMValue.Last());
+            listBox15.Items.Add(forecastTopLineMValue.Last());
             for (int i = 0; i < listBox13.Items.Count; i++)
             {
                 listBox16.Items.Add(Math.Abs(Convert.ToDouble(listBox13.Items[i]) - Convert.ToDouble(listBox15.Items[i])));
@@ -138,21 +162,12 @@ namespace CourseWorkRebuild
             }
             for (int i = 0; i < listBox17.Items.Count; i++)
             {
-                if (Convert.ToDouble(listBox17.Items[i]) < (Convert.ToDouble(listBox16.Items[i])/2))
+                if (Convert.ToDouble(listBox17.Items[i]) < (Convert.ToDouble(listBox16.Items[i]) / 2))
                 {
                     listBox18.Items.Add("В пределе");
                 }
                 else listBox18.Items.Add("Выход за границу");
-                //
             }
-        }
-
-        private void chartScale()
-        { 
-            functionDiagrams.ChartAreas[0].AxisX.Maximum = Math.Max(Math.Max(listOfBottomLineMValues.Max(),listOfMValues.Max()),listOfTopLineMValues.Max());
-            functionDiagrams.ChartAreas[0].AxisX.Minimum = Math.Min(Math.Min(listOfMValues.Min(), listOfTopLineMValues.Min()),listOfBottomLineMValues.Min());
-            functionDiagrams.ChartAreas[0].AxisY.Maximum = Math.Max(Math.Max(listOfBottomLineMValues.Max(), listOfMValues.Max()), listOfTopLineMValues.Max());
-            functionDiagrams.ChartAreas[0].AxisY.Minimum = Math.Min(Math.Min(listOfMValues.Min(), listOfTopLineMValues.Min()), listOfBottomLineMValues.Min());
         }
 
         private void loadObjectDiagram()
@@ -161,29 +176,17 @@ namespace CourseWorkRebuild
             objectDiagramPicture.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-        private void showMValues()
-        {
-            listOfMValues = calculations.calculateMValues(elevatorTable);
-            for (int i = 0; i < elevatorTable.Rows.Count; i++)
-            {
-                listBox1.Items.Add(listOfMValues[i]);
-            }
-
-        }
-
-        private void showAValues()
-        {
-            listOfAlphaValues = calculations.calculateAValues(elevatorTable, listOfMValues);
-            for (int i = 0;i < elevatorTable.Rows.Count;i++)
-            {
-                listBox2.Items.Add(listOfAlphaValues[i]);
-            }
-        }
-
-        private void initTAndAValues()
+        private void showTAndAValues()
         {
             this.toolStripTextBox1.Text = "T: " + initProject.getValueOfT();
             this.toolStripTextBox2.Text = "a: " + initProject.getValueOfa();
+            initTAndAlphaValues();
+        }
+
+        private void initTAndAlphaValues()
+        {
+            Alpha = Convert.ToDouble(toolStripTextBox2.Text.Split(' ')[1]);
+            T = Convert.ToDouble(toolStripTextBox1.Text.Split(' ')[1]);
         }
 
         private String SQL_AllTable()
@@ -196,46 +199,47 @@ namespace CourseWorkRebuild
         {
             initProject.setTValue(this.toolStripTextBox1.Text);
             initProject.setAValue(this.toolStripTextBox2.Text);
+            initTAndAlphaValues();
         }
 
         private void topLineSelectBox_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Верхняя граница";
             if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
-            else chartDiagramService.addLine(listOfTopLineMValues, listOfTopLineAValues, calculations.calculateTopLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams, serieName, listBox9, listBox10);
+            else chartDiagramService.addLine(listOfTopLineMValues, listOfTopLineAValues, functionDiagrams, serieName, listBox9, listBox10);
         }
 
         private void bottomLineSelectBox_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Нижняя граница";
             if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
-            else chartDiagramService.addLine(listOfBottomLineMValues, listOfBottomLineAValues, calculations.calculateBottomLine(dataTable, toolStripTextBox1, elevatorTable), functionDiagrams, serieName, listBox5, listBox6);
+            else chartDiagramService.addLine(listOfBottomLineMValues, listOfBottomLineAValues, functionDiagrams, serieName, listBox5, listBox6);
         }
 
         private void showResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Функция отклика";
             if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
-            else chartDiagramService.addResponseFunction(listOfMValues, listOfAlphaValues, elevatorTable, functionDiagrams);
+            else chartDiagramService.addLine(listOfMValues, listOfAValues, functionDiagrams, serieName, listBox1, listBox2);
         }
 
         private void forecastResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Прогнозное значение";
             if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
-            else chartDiagramService.addforecastResponseFunction(listOfMValues, listOfAlphaValues, functionDiagrams, toolStripTextBox2, listBox3, listBox4);
+            else chartDiagramService.addforecastFunction(serieName, forecastMValue, forecastAValue, functionDiagrams, listBox3, listBox4);
         }
         private void forecastBottomValues_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Прогнозное значение для нижней границы";
             if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
-            else chartDiagramService.addforecastBottomFunction(dataTable, toolStripTextBox1, functionDiagrams, toolStripTextBox2, elevatorTable, listBox7, listBox8);
+            else chartDiagramService.addforecastFunction(serieName, forecastBottomLineMValue, forecastBottomLineAValue, functionDiagrams, listBox7, listBox8);
         }
         private void forecastTopLineValues_CheckedChanged(object sender, EventArgs e)
         {
             String serieName = "Прогнозное значение для верхней границы";
             if (functionDiagrams.Series.IndexOf(serieName) != -1) chartDiagramService.removeLine(functionDiagrams, serieName);
-            else chartDiagramService.addforecastTopFunction(dataTable, toolStripTextBox1, functionDiagrams, toolStripTextBox2, elevatorTable, listBox11, listBox12);
+            else chartDiagramService.addforecastFunction(serieName, forecastTopLineMValue, forecastTopLineAValue ,functionDiagrams, listBox11, listBox12);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -249,6 +253,8 @@ namespace CourseWorkRebuild
             resizeControl(elevatorTableRectangle, elevatorTable);
             resizeControl(objectDiagramPictureRectangle, objectDiagramPicture);
             resizeControl(responseFunctionDiagramRectangle, functionDiagrams);
+            resizeControl(forecastBottomLineSelectBoxRectangle, forecastBottomLineValues);
+            resizeControl(forecastTopLineSelectBoxRectangle, forecastTopLineValues);
             for (int column = 0; column < elevatorTable.ColumnCount; column++)
             {
                 elevatorTable.Columns[column].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -283,7 +289,10 @@ namespace CourseWorkRebuild
             elevatorTableRectangle = new Rectangle(elevatorTable.Location.X, elevatorTable.Location.Y, elevatorTable.Width, elevatorTable.Height);
             responseFunctionDiagramRectangle = new Rectangle(functionDiagrams.Location.X, functionDiagrams.Location.Y, functionDiagrams.Width, functionDiagrams.Height);
             objectDiagramPictureRectangle = new Rectangle(objectDiagramPicture.Location.X, objectDiagramPicture.Location.Y, objectDiagramPicture.Width, objectDiagramPicture.Height);
+            forecastBottomLineSelectBoxRectangle = new Rectangle(forecastBottomLineValues.Location.X, forecastBottomLineValues.Location.Y, forecastBottomLineValues.Width, forecastBottomLineValues.Height); ;
+            forecastTopLineSelectBoxRectangle = new Rectangle(forecastTopLineValues.Location.X, forecastTopLineValues.Location.Y, forecastTopLineValues.Width, forecastTopLineValues.Height); ;
         }
+
 
     }
 }
