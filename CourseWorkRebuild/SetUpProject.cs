@@ -93,7 +93,7 @@ namespace CourseWorkRebuild
                     if (valueLine.StartsWith("Количество структурных блоков"))
                     {
                         List<String> line = valueLine.Split(' ').ToList();
-                        buildingCount = line[1];
+                        buildingCount = line[3];
 
                     }
                 }
@@ -102,7 +102,7 @@ namespace CourseWorkRebuild
                     if (valueLine.StartsWith("Количество геодезических марок, закрепленных в теле объекта"))
                     {
                         List<String> line = valueLine.Split(' ').ToList();
-                        valueOfT = line[1];
+                        markCount = line[7];
 
                     }
                 }

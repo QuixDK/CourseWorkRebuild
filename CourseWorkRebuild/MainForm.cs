@@ -13,6 +13,7 @@ using System.Threading;
 using System.Reflection.Emit;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Data.Entity;
 
 namespace CourseWorkRebuild
 {
@@ -52,6 +53,9 @@ namespace CourseWorkRebuild
         private Calculations calculations;
         private Double Alpha;
         private Double T;
+        private int markCount;
+        private int buildingCount;
+        private String hintLabelForMarks;
         DataGridView bottomLineTable = new DataGridView();
         DataGridView topLineTable = new DataGridView();
 
@@ -71,6 +75,12 @@ namespace CourseWorkRebuild
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            panel1.Hide();
+            panel2.Hide();
+            panel3.Hide();
+            panel4.Hide();
+            panel5.Hide();
+            panel6.Hide();
             initRectangleSettings();
 
             try
@@ -118,6 +128,7 @@ namespace CourseWorkRebuild
             loadObjectDiagram();
             showTAndAValues();
             firstLevel();
+            secondLevel();
         }
 
         private void firstLevel()
@@ -176,13 +187,60 @@ namespace CourseWorkRebuild
 
         private void secondLevel()
         {
-
+            buildingCount = Convert.ToInt32(initProject.getBuildingCount());
+            switch(buildingCount)
+            {
+                case 0:
+                    break;
+                case 1:
+                    panel1.Show();
+                    break;
+                case 2:
+                    panel1.Show();
+                    panel2.Show();
+                    break;
+                case 3:
+                    panel1.Show();
+                    panel2.Show();
+                    panel3.Show();
+                    break;
+                case 4:
+                    panel1.Show();
+                    panel2.Show();
+                    panel3.Show();
+                    panel4.Show();
+                    break;
+                case 5:
+                    panel1.Show();
+                    panel2.Show();
+                    panel3.Show();
+                    panel4.Show();
+                    panel5.Show();
+                    break;
+                case 6:
+                    panel1.Show();
+                    panel2.Show();
+                    panel3.Show();
+                    panel4.Show();
+                    panel5.Show();
+                    panel6.Show();
+                    break;
+            }
+            markCount = Convert.ToInt32(initProject.getMarkCount());
+            hintLabelForMarks = Convert.ToString(Math.Floor(Convert.ToDouble(markCount/buildingCount)));
+            label27.Text = "Распределите на каждый\nобъект по " + hintLabelForMarks.ToString() + " марки";
+            for (int i = 1; i <= markCount; i++)
+            {
+                listBox19.Items.Add(i);
+            }
         }
 
         private void loadObjectDiagram()
         {
             objectDiagramPicture.Load(initProject.getPathToObjectDiagramRoot());
             objectDiagramPicture.SizeMode = PictureBoxSizeMode.StretchImage;
+            objectDiagramPicture2.Load(initProject.getPathToObjectDiagramRoot());
+            objectDiagramPicture2.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void showTAndAValues()
@@ -296,6 +354,83 @@ namespace CourseWorkRebuild
             forecastTopLineSelectBoxRectangle = new Rectangle(forecastTopLineValues.Location.X, forecastTopLineValues.Location.Y, forecastTopLineValues.Width, forecastTopLineValues.Height); ;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (listBox19.Items.Count > 0)
+            {
+                listBox20.Items.Add(listBox19.Items[0]);
+                listBox19.Items.Remove(listBox19.Items[0]);
+            }
 
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (listBox20.Items.Count > 0)
+            {
+                listBox19.Items.Insert(0, listBox20.Items[listBox20.Items.Count - 1]);
+                listBox20.Items.Remove(listBox20.Items[listBox20.Items.Count - 1]);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (listBox19.Items.Count > 0)
+            {
+                listBox21.Items.Add(listBox19.Items[0]);
+                listBox19.Items.Remove(listBox19.Items[0]);
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (listBox21.Items.Count > 0)
+            {
+                listBox19.Items.Insert(0, listBox21.Items[listBox21.Items.Count - 1]);
+                listBox21.Items.Remove(listBox21.Items[listBox21.Items.Count - 1]);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (listBox19.Items.Count > 0)
+            {
+                listBox22.Items.Add(listBox19.Items[0]);
+                listBox19.Items.Remove(listBox19.Items[0]);
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (listBox22.Items.Count > 0)
+            {
+                listBox19.Items.Insert(0, listBox22.Items[listBox22.Items.Count - 1]);
+                listBox22.Items.Remove(listBox22.Items[listBox22.Items.Count - 1]);
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (listBox19.Items.Count > 0)
+            {
+                listBox23.Items.Add(listBox19.Items[0]);
+                listBox19.Items.Remove(listBox19.Items[0]);
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (listBox23.Items.Count > 0)
+            {
+                listBox19.Items.Insert(0, listBox23.Items[listBox23.Items.Count - 1]);
+                listBox23.Items.Remove(listBox23.Items[listBox23.Items.Count - 1]);
+            }
+            
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
