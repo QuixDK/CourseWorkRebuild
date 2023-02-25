@@ -55,7 +55,9 @@ namespace CourseWorkRebuild
         private Double T;
         private int markCount;
         private int buildingCount;
+        private int needMarkCount;
         private String hintLabelForMarks;
+        private int panelShowedCount;
         DataGridView bottomLineTable = new DataGridView();
         DataGridView topLineTable = new DataGridView();
 
@@ -194,21 +196,25 @@ namespace CourseWorkRebuild
                     break;
                 case 1:
                     panel1.Show();
+                    panelShowedCount = 1;
                     break;
                 case 2:
                     panel1.Show();
                     panel2.Show();
+                    panelShowedCount = 2;
                     break;
                 case 3:
                     panel1.Show();
                     panel2.Show();
                     panel3.Show();
+                    panelShowedCount = 3;
                     break;
                 case 4:
                     panel1.Show();
                     panel2.Show();
                     panel3.Show();
                     panel4.Show();
+                    panelShowedCount = 4;
                     break;
                 case 5:
                     panel1.Show();
@@ -216,6 +222,7 @@ namespace CourseWorkRebuild
                     panel3.Show();
                     panel4.Show();
                     panel5.Show();
+                    panelShowedCount = 5;
                     break;
                 case 6:
                     panel1.Show();
@@ -224,10 +231,15 @@ namespace CourseWorkRebuild
                     panel4.Show();
                     panel5.Show();
                     panel6.Show();
+                    panelShowedCount = 6;
                     break;
             }
+            
+            
             markCount = Convert.ToInt32(initProject.getMarkCount());
-            hintLabelForMarks = Convert.ToString(Math.Floor(Convert.ToDouble(markCount/buildingCount)));
+            Double value = Math.Floor(Convert.ToDouble(markCount / Convert.ToDouble(buildingCount)));
+            needMarkCount = Convert.ToInt32(value);
+            hintLabelForMarks = Convert.ToString(needMarkCount);
             label27.Text = "Распределите на каждый\nобъект по " + hintLabelForMarks.ToString() + " марки";
             for (int i = 1; i <= markCount; i++)
             {
@@ -360,6 +372,7 @@ namespace CourseWorkRebuild
             {
                 listBox20.Items.Add(listBox19.Items[0]);
                 listBox19.Items.Remove(listBox19.Items[0]);
+                chechMarkCountIsCorrect();
             }
 
         }
@@ -379,6 +392,7 @@ namespace CourseWorkRebuild
             {
                 listBox21.Items.Add(listBox19.Items[0]);
                 listBox19.Items.Remove(listBox19.Items[0]);
+                chechMarkCountIsCorrect();
             }
         }
 
@@ -397,6 +411,7 @@ namespace CourseWorkRebuild
             {
                 listBox22.Items.Add(listBox19.Items[0]);
                 listBox19.Items.Remove(listBox19.Items[0]);
+                chechMarkCountIsCorrect();
             }
         }
 
@@ -415,6 +430,7 @@ namespace CourseWorkRebuild
             {
                 listBox23.Items.Add(listBox19.Items[0]);
                 listBox19.Items.Remove(listBox19.Items[0]);
+                chechMarkCountIsCorrect();
             }
         }
 
@@ -430,7 +446,70 @@ namespace CourseWorkRebuild
 
         private void button12_Click(object sender, EventArgs e)
         {
+            if (listBox24.Items.Count > 0)
+            {
+                listBox19.Items.Insert(0, listBox24.Items[listBox24.Items.Count - 1]);
+                listBox24.Items.Remove(listBox24.Items[listBox24.Items.Count - 1]);
+            }
+        }
 
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (listBox19.Items.Count > 0)
+            {
+                listBox24.Items.Add(listBox19.Items[0]);
+                listBox19.Items.Remove(listBox19.Items[0]);
+                chechMarkCountIsCorrect();
+            }
+
+        }
+
+        private void secondLevelStart()
+        {
+            MessageBox.Show("Отлично, переходим к расчетам");
+        }
+
+        private void chechMarkCountIsCorrect()
+        {
+            switch (panelShowedCount)
+            {
+                case 1:
+                    if (listBox20.Items.Count == needMarkCount)
+                    {
+                        secondLevelStart();
+                    }
+                    break;
+                case 2:
+                    if ((listBox20.Items.Count == needMarkCount) & (listBox21.Items.Count == needMarkCount))
+                    {
+                        secondLevelStart();
+                    }
+                    break;
+                case 3:
+                    if ((listBox20.Items.Count == needMarkCount) & (listBox21.Items.Count == needMarkCount) & (listBox22.Items.Count == needMarkCount))
+                    {
+                        secondLevelStart();
+                    }
+                    break;
+                case 4:
+                    if ((listBox20.Items.Count == needMarkCount) & (listBox21.Items.Count == needMarkCount) & (listBox22.Items.Count == needMarkCount) & (listBox23.Items.Count == needMarkCount))
+                    {
+                        secondLevelStart();
+                    }
+                    break;
+                case 5:
+                    if ((listBox20.Items.Count == needMarkCount) & (listBox21.Items.Count == needMarkCount) & (listBox22.Items.Count == needMarkCount) & (listBox23.Items.Count == needMarkCount) & (listBox24.Items.Count == needMarkCount))
+                    {
+                        secondLevelStart();
+                    }
+                    break;
+                case 6:
+                    if ((listBox20.Items.Count == needMarkCount) & (listBox21.Items.Count == needMarkCount) & (listBox22.Items.Count == needMarkCount) & (listBox23.Items.Count == needMarkCount) & (listBox24.Items.Count == needMarkCount) & (listBox25.Items.Count == needMarkCount))
+                    {
+                        secondLevelStart();
+                    }
+                    break;
+            }
         }
     }
 }

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend17 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title17 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea19 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend19 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title19 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.elevatorTable = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
@@ -547,18 +547,18 @@
             // 
             // functionDiagrams
             // 
-            chartArea17.Name = "ChartArea1";
-            this.functionDiagrams.ChartAreas.Add(chartArea17);
-            legend17.Name = "Legend1";
-            this.functionDiagrams.Legends.Add(legend17);
+            chartArea19.Name = "ChartArea1";
+            this.functionDiagrams.ChartAreas.Add(chartArea19);
+            legend19.Name = "Legend1";
+            this.functionDiagrams.Legends.Add(legend19);
             this.functionDiagrams.Location = new System.Drawing.Point(3, 6);
             this.functionDiagrams.Name = "functionDiagrams";
             this.functionDiagrams.Size = new System.Drawing.Size(1218, 551);
             this.functionDiagrams.TabIndex = 16;
             this.functionDiagrams.Text = "chart1";
-            title17.Name = "Функция Отклика";
-            title17.Text = "График";
-            this.functionDiagrams.Titles.Add(title17);
+            title19.Name = "Функция Отклика";
+            title19.Text = "График";
+            this.functionDiagrams.Titles.Add(title19);
             // 
             // tabPage4
             // 
@@ -715,9 +715,9 @@
             // 
             // objectDiagramPicture2
             // 
-            this.objectDiagramPicture2.Location = new System.Drawing.Point(892, 30);
+            this.objectDiagramPicture2.Location = new System.Drawing.Point(888, 12);
             this.objectDiagramPicture2.Name = "objectDiagramPicture2";
-            this.objectDiagramPicture2.Size = new System.Drawing.Size(329, 225);
+            this.objectDiagramPicture2.Size = new System.Drawing.Size(333, 273);
             this.objectDiagramPicture2.TabIndex = 16;
             this.objectDiagramPicture2.TabStop = false;
             // 
@@ -948,6 +948,7 @@
             this.button9.TabIndex = 26;
             this.button9.Text = "Добавить";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
             // 
