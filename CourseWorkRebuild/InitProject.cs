@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CourseWorkRebuild
 {
@@ -44,7 +45,17 @@ namespace CourseWorkRebuild
         }
         public String getBuildingCount()
         {
-            return this.buildingCount;
+            try
+            {
+                Convert.ToInt32(this.buildingCount);
+                return this.buildingCount;
+            }
+            catch (Exception e)
+            {
+                
+                return null;
+            }
+            
         }
 
         public String getPathToObjectDiagramRoot()

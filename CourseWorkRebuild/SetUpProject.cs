@@ -1,9 +1,14 @@
-﻿using System;
+﻿using SharpCompress.Archives;
+using SharpCompress.Archives.Rar;
+using SharpCompress.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +37,42 @@ namespace CourseWorkRebuild
         {
             try
             {
+                String archivePath = "";
+                OpenFileDialog chooseRarFile = new OpenFileDialog();
+                chooseRarFile.Title = "Выберите архив с проектом";
+                chooseRarFile.Filter = "RAR files(*.rar) | *.rar";
+                chooseRarFile.Multiselect = false;
+
+                if (chooseRarFile.ShowDialog() == DialogResult.OK)
+                {
+                    archivePath = Path.GetFullPath(chooseRarFile.FileName);
+                }
+
+                String filePath = "D:\\Projects";
+
+                if (archivePath != "")
+                {
+                    using (var archive = ArchiveFactory.Open(archivePath))
+                    {
+                        foreach (var entry in archive.Entries)
+                        {
+                            string outputPath = Path.Combine(filePath, entry.Key);
+
+                            Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+
+                            entry.WriteToDirectory(filePath, new ExtractionOptions
+                            {
+                                ExtractFullPath = true,
+                                Overwrite = true
+                            });
+                        }
+                    }
+                }
+
                 FolderBrowserDialog selectProjectPath = new FolderBrowserDialog();
+                selectProjectPath.SelectedPath = "D:\\Projects";
+                selectProjectPath.Description = "Выберите проект";
+
                 if (selectProjectPath.ShowDialog() == DialogResult.OK)
                 {
                     this.projectRoot = selectProjectPath.SelectedPath;
@@ -42,42 +82,57 @@ namespace CourseWorkRebuild
                 {
                     throw new NullProjectRootException("Не указана папка с проектом");
                 }
-                List<String> dbFiles = new List<String>();
-                List<String> pngFiles = new List<String>();
-                List<String> values = new List<String>();
-                foreach (string f in Directory.GetFiles(projectRoot, "*.sqlite"))
-                {
-                    dbFiles.Add(System.IO.Path.GetFullPath(f));
-                }
-                foreach (string f in Directory.GetFiles(projectRoot, "*.png"))
-                {
-                    pngFiles.Add(System.IO.Path.GetFullPath(f));
-                }
-                foreach (string f in Directory.GetFiles(projectRoot, "*.txt"))
-                {
-                    values.Add(System.IO.Path.GetFullPath(f));
-                }
 
-                if (dbFiles.Count == 0)
+                String dbFilePath = "";
+                String pngFilePath = "";
+                String txtFilePath = "";
+
+                OpenFileDialog chooseFile = new OpenFileDialog();
+                chooseFile.InitialDirectory = projectRoot;
+                chooseFile.Multiselect = false;
+
+                int dbFilesCount = Directory.GetFiles(projectRoot, "*.sqlite").Length;
+                int pngFilesCount = Directory.GetFiles(projectRoot, "*.png").Length;
+                int txtFilesCount = Directory.GetFiles(projectRoot, "*.txt").Length;
+
+                if (dbFilesCount > 1 | dbFilesCount == 0)
+                {
+                    chooseFile.Title = "Выберите таблицу высот";
+                    chooseFile.Filter = "SQLite files (*.sqlite)|*.sqlite";
+                    dbFilePath = ChoosePathToFile(projectRoot, chooseFile);
+                }
+                else dbFilePath = Path.GetFullPath(Directory.GetFiles(projectRoot, "*.sqlite")[0]);
+
+                if (pngFilesCount > 1 | pngFilesCount == 0)
+                {
+                    chooseFile.Title = "Выберите схему объекта";
+                    chooseFile.Filter = "PNG files (*.png)|*.png";
+                    pngFilePath = ChoosePathToFile(projectRoot, chooseFile);
+                }
+                else pngFilePath = Path.GetFullPath(Directory.GetFiles(projectRoot, "*.png")[0]);
+
+                if (txtFilesCount > 1 | txtFilesCount == 0)
+                {
+                    chooseFile.Title = "Выберите текстовый документ с данными";
+                    chooseFile.Filter = "Text files (*.txt)|*.txt";
+                    txtFilePath = ChoosePathToFile(projectRoot, chooseFile);
+                }
+                else txtFilePath = Path.GetFullPath(Directory.GetFiles(projectRoot, "*.txt")[0]);
+
+                if (dbFilePath == "")
                 {
                     throw new FilesNotFoundException("Не найден файл с базой данных");
                 }
-
-                if (pngFiles.Count == 0)
+                if (pngFilePath == "")
                 {
                     throw new FilesNotFoundException("Не найдена схема объекта");
                 }
-
-                if (values.Count == 0)
+                if (txtFilePath == "")
                 {
-                    throw new FilesNotFoundException("Не найдена схема объекта");
+                    throw new FilesNotFoundException("Не найден файл с данными об объекте");
                 }
 
-                String valuesPath = values[0];
-                String elevatorAndValuesTablePath = dbFiles[0];
-                String objectDiagramPath = pngFiles[0];
-
-                List<String> valueLines = File.ReadAllLines(valuesPath, Encoding.Unicode).ToList();
+                List<String> valueLines = File.ReadAllLines(txtFilePath, Encoding.Unicode).ToList();
 
                 foreach(String valueLine in valueLines)
                 {
@@ -107,8 +162,7 @@ namespace CourseWorkRebuild
                     }
                 }
 
-                this.initProject = new InitProject(elevatorAndValuesTablePath, objectDiagramPath, valueOfT, "0,9", markCount, buildingCount);
-
+                this.initProject = new InitProject(dbFilePath, pngFilePath, valueOfT, "0,9", markCount, buildingCount);
                 Close();
 
 
@@ -116,11 +170,22 @@ namespace CourseWorkRebuild
             catch (NullProjectRootException err)
             {
                 MessageBox.Show(err.Message);
+                
             }
             catch (FilesNotFoundException err)
             {
                 MessageBox.Show(err.Message);
             }
+        }
+
+        private String ChoosePathToFile(String projectRoot, OpenFileDialog chooseFile)
+        {
+            String filePath = "";
+            if (chooseFile.ShowDialog() == DialogResult.OK)
+            {
+                filePath = Path.GetFullPath(chooseFile.FileName);
+            }
+            return filePath;
         }
 
         public InitProject getInitProject()

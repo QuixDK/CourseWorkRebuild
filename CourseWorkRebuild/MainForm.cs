@@ -53,8 +53,8 @@ namespace CourseWorkRebuild
         private Calculations calculations;
         private Double Alpha;
         private Double T;
-        private int markCount;
-        private int buildingCount;
+        private int markCount = 0;
+        private int buildingCount = 0;
         private int needMarkCount;
         private String hintLabelForMarks;
         private int panelShowedCount;
@@ -113,7 +113,7 @@ namespace CourseWorkRebuild
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
+                
                 Close();
             }
 
@@ -129,8 +129,7 @@ namespace CourseWorkRebuild
 
             loadObjectDiagram();
             showTAndAValues();
-            firstLevel();
-            secondLevel();
+
         }
 
         private void firstLevel()
@@ -189,61 +188,74 @@ namespace CourseWorkRebuild
 
         private void secondLevel()
         {
-            buildingCount = Convert.ToInt32(initProject.getBuildingCount());
-            switch(buildingCount)
+            try
             {
-                case 0:
-                    break;
-                case 1:
-                    panel1.Show();
-                    panelShowedCount = 1;
-                    break;
-                case 2:
-                    panel1.Show();
-                    panel2.Show();
-                    panelShowedCount = 2;
-                    break;
-                case 3:
-                    panel1.Show();
-                    panel2.Show();
-                    panel3.Show();
-                    panelShowedCount = 3;
-                    break;
-                case 4:
-                    panel1.Show();
-                    panel2.Show();
-                    panel3.Show();
-                    panel4.Show();
-                    panelShowedCount = 4;
-                    break;
-                case 5:
-                    panel1.Show();
-                    panel2.Show();
-                    panel3.Show();
-                    panel4.Show();
-                    panel5.Show();
-                    panelShowedCount = 5;
-                    break;
-                case 6:
-                    panel1.Show();
-                    panel2.Show();
-                    panel3.Show();
-                    panel4.Show();
-                    panel5.Show();
-                    panel6.Show();
-                    panelShowedCount = 6;
-                    break;
+                if (initProject.getBuildingCount() == null)
+                {
+                    MessageBox.Show("Не указано количество объектов");
+                    throw new NullBuildingsCountException("Не указано количество объектов");
+                }
+                buildingCount = Convert.ToInt32(initProject.getBuildingCount());
+                switch (buildingCount)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        panel1.Show();
+                        panelShowedCount = 1;
+                        break;
+                    case 2:
+                        panel1.Show();
+                        panel2.Show();
+                        panelShowedCount = 2;
+                        break;
+                    case 3:
+                        panel1.Show();
+                        panel2.Show();
+                        panel3.Show();
+                        panelShowedCount = 3;
+                        break;
+                    case 4:
+                        panel1.Show();
+                        panel2.Show();
+                        panel3.Show();
+                        panel4.Show();
+                        panelShowedCount = 4;
+                        break;
+                    case 5:
+                        panel1.Show();
+                        panel2.Show();
+                        panel3.Show();
+                        panel4.Show();
+                        panel5.Show();
+                        panelShowedCount = 5;
+                        break;
+                    case 6:
+                        panel1.Show();
+                        panel2.Show();
+                        panel3.Show();
+                        panel4.Show();
+                        panel5.Show();
+                        panel6.Show();
+                        panelShowedCount = 6;
+                        break;
+                }
+
+
+                markCount = Convert.ToInt32(initProject.getMarkCount());
+                Double value = Math.Floor(Convert.ToDouble(markCount / Convert.ToDouble(buildingCount)));
+                needMarkCount = Convert.ToInt32(value);
+                hintLabelForMarks = Convert.ToString(needMarkCount);
+                label27.Text = "Распределите на каждый\nобъект по " + hintLabelForMarks.ToString() + " марки";
+                for (int i = 1; i <= markCount; i++)
+                {
+                    listBox19.Items.Add(i);
+                }
             }
             
-            
-            markCount = Convert.ToInt32(initProject.getMarkCount());
-            Double value = Math.Floor(Convert.ToDouble(markCount / Convert.ToDouble(buildingCount)));
-            needMarkCount = Convert.ToInt32(value);
-            hintLabelForMarks = Convert.ToString(needMarkCount);
-            label27.Text = "Распределите на каждый\nобъект по " + hintLabelForMarks.ToString() + " марки";
-            for (int i = 1; i <= markCount; i++)
+            catch (NullBuildingsCountException ex)
             {
-                listBox19.Items.Add(i);
+
             }
         }
 
@@ -267,12 +279,16 @@ namespace CourseWorkRebuild
             Alpha = Convert.ToDouble(toolStripTextBox2.Text.Split(' ')[1]);
             T = Convert.ToDouble(toolStripTextBox1.Text.Split(' ')[1]);
         }
+        public void updateTAndAlphaValues(TextBox textBox, TextBox textBox2, TextBox textBox3)
+        {
+            T = Convert.ToDouble(textBox.Text);
+            Alpha = Convert.ToDouble(textBox2.Text);
+            buildingCount = Convert.ToInt32(textBox3.Text);
+        }
 
         private void saveChangesButton_Click(object sender, EventArgs e)
         {
-            initProject.setTValue(this.toolStripTextBox1.Text);
-            initProject.setAValue(this.toolStripTextBox2.Text);
-            initTAndAlphaValues();
+            
         }
 
         private void showResponseFunctionSelectBox_CheckedChanged(object sender, EventArgs e)
@@ -511,5 +527,77 @@ namespace CourseWorkRebuild
                     break;
             }
         }
+
+        private void elevatorTable_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            int currentColumn =  e.ColumnIndex;
+            int currentRow = e.RowIndex;
+            Double newValue = Convert.ToDouble(elevatorTable.Rows[currentRow].Cells[currentColumn].Value);
+            elevatorTable = db.updateValue(elevatorTable, currentColumn, currentRow, newValue);
+        }
+
+        private void AddNewRow_Click(object sender, EventArgs e)
+        {
+            elevatorTable.Rows.Add();
+            
+            Double delta = 0;
+            Double averageDelta = 0;
+            Double newCellValue = 0;
+            int newRow = elevatorTable.RowCount;
+            Random random= new Random();
+            elevatorTable.Rows[newRow-1].Cells[0].Value = Convert.ToInt32(elevatorTable.Rows[newRow-2].Cells[0].Value) + 1;
+            db.addNewRow(Convert.ToDouble(elevatorTable.Rows[newRow - 1].Cells[0].Value));
+            for (int i = 1; i < elevatorTable.Columns.Count; i++)
+            {
+                
+                for (int j = 0; j < elevatorTable.Rows.Count-1; j++)
+                {
+                    if (Convert.ToDouble(elevatorTable.Rows[j + 1].Cells[i].Value) != 0) {
+                        delta = Math.Abs(Convert.ToDouble(elevatorTable.Rows[j].Cells[i].Value) - Convert.ToDouble(elevatorTable.Rows[j + 1].Cells[i].Value));
+                    }
+                    
+                    averageDelta += delta;
+                    delta = 0;
+                }
+                
+                averageDelta /= elevatorTable.Rows.Count;
+                newCellValue = random.NextDouble() * (averageDelta - (-averageDelta)) + averageDelta;
+                elevatorTable.Rows[newRow-1].Cells[i].Value = Math.Round(newCellValue + Convert.ToDouble(elevatorTable.Rows[newRow-2].Cells[i].Value), 4);
+                db.addNewValuesInRow(i, newRow-1, Convert.ToDouble(elevatorTable.Rows[newRow - 1].Cells[i].Value));
+                averageDelta = 0;
+            }
+            
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+            
+            
+        }
+
+        private void tabPage4_Enter(object sender, EventArgs e)
+        {
+            firstLevel();
+            
+        }
+
+        private void tabPage5_Enter(object sender, EventArgs e)
+        {
+            secondLevel();
+        }
+        public class NullBuildingsCountException : Exception
+        {
+            public NullBuildingsCountException(string message)
+                : base(message) { }
+
+        }
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.initValues(T, Alpha, buildingCount);
+            settingsForm.ShowDialog();
+        }
     }
+
 }

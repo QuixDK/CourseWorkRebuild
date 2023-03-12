@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
@@ -93,6 +94,30 @@ namespace CourseWorkRebuild
             }
             return elevatorTable;
 
+        }
+
+        public DataGridView updateValue(DataGridView elevatorTable, int currentColumn, int currentRow, Double newValue)
+        {
+            String updateQuery = "UPDATE [" + getTableNames() + "] SET \"" + currentColumn + "\" = \"" + newValue + "\" WHERE Эпоха = \'" + currentRow +  "\'";
+            SQLiteCommand command = new SQLiteCommand(sqlConnection);
+            command.CommandText = updateQuery;
+            command.ExecuteNonQuery();
+            return elevatorTable;
+        }
+
+        public void addNewValuesInRow(int column, int row, Double value)
+        {
+            String SQLQuery = "UPDATE [" + getTableNames() + "] SET \"" + column + "\" = \"" + value + "\" WHERE Эпоха = \'" + row + "\'";
+            SQLiteCommand command = new SQLiteCommand(sqlConnection);
+            command.CommandText = SQLQuery;
+            command.ExecuteNonQuery();
+        }
+        public void addNewRow(Double value)
+        {
+            String SQLQuery = "INSERT INTO [" + getTableNames() + "] (Эпоха) VALUES (\"" + value + "\")";
+            SQLiteCommand command = new SQLiteCommand(sqlConnection);
+            command.CommandText = SQLQuery;
+            command.ExecuteNonQuery();
         }
 
     }
